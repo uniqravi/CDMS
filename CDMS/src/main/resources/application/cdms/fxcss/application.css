@@ -1,0 +1,287 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.pref_anchorPane{
+	-fx-background-color: #e5eaf5;
+	-fx-background-image: url(../images/pepsi3.png) ;
+	-fx-pref-width: 1800px;
+	-fx-pref-height: 900px;
+	-fx-border-style: dashed ;
+}
+
+.backGround_Image_setup{
+	-fx-background-image: url(../images/user_icon.png); 
+	-fx-background-repeat: no-repeat; 
+	-fx-background-position: right center;
+}
+
+.grid_menu_bar_menu{
+	
+	-fx-background-color: blue;
+}
+
+
+.accordion_anchor{
+	-fx-background-color: #3f51b5;
+}
+
+
+.button_raised{
+ 	-fx-padding: 0.7em 0.57em;
+ 	-fx-font-size: 14px;
+ 	-fx-background-color: rgb(77,102,204);
+ 	-fx-pref-width: 200;
+ 	-fx-text-fill: WHITE;
+}
+
+.menuIconButton{
+	-fx-background-color: #448aff;
+	-fx-border-color:black;
+}
+
+.custome_label{
+	-fx-background-color: #e5eaf5; 
+	-fx-text-alignment: center;
+	-fx-font-family: SansSerif;
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+	-fx-text-fill: #009688;
+}
+
+.grid_css{
+	/*-fx-background-color: #e5eaf5;*/
+	-fx-border-insets: 0px,5px,5px,0px;
+	-fx-border-radius: 2px;
+	-fx-hgap: 10px;
+    -fx-background-color: #aeb5ba, linear-gradient(to bottom, #ecf4fa 0%, #ced4d9 100%);
+    -fx-background-insets: 0, 0 0 1 0;
+}
+.hox_toggle_css{
+	-fx-border-width: 1.0px 0px 0px 0px;
+	-fx-border-color: #E0E0E0;
+}
+.hox_input{
+	-fx-padding: 0px 3px 0.0px 3px;
+	-fx-spacing: 2.0em;
+}
+.custom_textField,.custom_grid_combobox,.custom_datepicker{
+	-fx-font-family: arial;
+	-fx-font-size: 21px; 
+	-fx-border-radius: 2em 2em 0em 0em ;
+}
+.customeToggle{
+	-fx-font-family: arial;
+	-fx-font-size: 13px;
+	-fx-text-fill:#009688;
+	-fx-font-weight: bold;
+}
+.custom_button{
+	-fx-background-color: #0000FF;
+	-fx-text-fill:white;
+	-fx-font-size: 16px;
+	-fx-font-family:arial;
+	-fx-pref-height: 32.0;
+}
+
+.vboxMain{
+	-fx-border-width: 0px  5px 0.0px 7px;
+	-fx-border-color: #18FFFF;
+	-fx-background-insets: 0px;
+}
+
+.vboxMainPageLabel{
+	-fx-font-family: SansSerif;
+	-fx-font-size: 22px;
+	-fx-text-fill: black;
+	-fx-show-tick-labels: true ;
+	-fx-padding:2px;
+	-fx-border-width: 0.0px 2px 2px 2px;
+	-fx-background-color: #D8D8D8;
+	-fx-background-insets: 0px;
+}
+.subcontenlabel{
+	-fx-cursor: hand ;
+	-fx-padding: 2px 2px 2px 10px;
+	-fx-border-width: 0px 0px 1px 0px;
+	-fx-border-color: #D8D8D8;
+}
+.subcontenlabel:hover{
+	-fx-background-color: #E8EAF6;
+	-fx-text-fill: black;
+}	
+.side_menu_titled-pane{
+	-fx-text-fill: white;
+	-fx-font-size: 1.6em;
+}
+
+.side_menu_titled-pane:focused {
+    -fx-text-fill: #18FFFF;
+}
+.side_menu_titled-pane > .title {
+    -fx-background-color: blue;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
+    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
+    -fx-pref-height: 4.0em;
+    -fx-border-width: 0.08em;
+    -fx-border-color: #E0E0E0;
+    -fx-alignment: center-right ;
+}
+
+/*Style of each column header in the tableView*/
+.sum_table .column-header {
+    visibility: hidden;
+   -fx-padding: -1.0em;
+   -fx-pref-height: 0;
+   -fx-min-height: 0;
+   -fx-max-height: 0;
+} 
+
+/*Style of each column header's background in the tableView*/
+.sum_table .column-header-background{
+	visibility: hidden;
+	-fx-padding: -1.0em;
+}
+
+
+/*Style of entire tableView*/
+.table-view{
+    -fx-background-color: transparent;
+    /*-fx-background-color: #b2b9c4; */
+   	-fx-border-color: #525053; 
+ }
+
+ /*Style of entire tableView when is getting focused*/
+.table-view:focused{
+    /*-fx-background-color: transparent;*/
+}
+
+
+
+/*Style of each column header in the tableView*/
+.table-view .column-header {
+	-fx-border-width: 0.30; 
+    -fx-border-color: #E0E0E0;
+    -fx-background-color: transparent;
+} 
+
+/*Style of each column header's background in the tableView*/
+.table-view .column-header-background{
+    -fx-background-color: #3F51B5;/*linear-gradient(#131313 0.0%, #424141 100.0%);*/
+}
+
+ /*Style of each column header's label  in the tableView*/
+.table-view .column-header-background .label{
+     -fx-background-color: transparent; 
+    -fx-font-weight:bold;
+    -fx-text-fill: white;
+    -fx-wrap-text:true;
+}
+
+/*Style of each column in the tableView*/
+.table-view .table-column{
+    -fx-alignment:center;
+}
+
+ /*Style of each table cell*/
+.table-view .table-cell{
+    -fx-font-weight:bold;
+    -fx-font-size:12px;          /*the font size you asked in the comments below*/
+    -fx-text-fill:purple; 
+}
+
+
+/*Style for each < non odd> row of table view*/
+.table-row-cell:even{
+    -fx-background-color: white;
+    -fx-padding: 0.0em; 
+}
+
+/*Style for each <odd> row of table view*/
+.table-row-cell:odd{
+    -fx-background-color: #E8EAF6;
+    -fx-padding: 0.0em;
+      
+}
+
+/*Style of each entire row in the table view*/
+.table-row-cell:selected {
+   /* -fx-border-color:transparent firebrick transparent firebrick  ;
+   /-fx-border-width:2.0; */ 
+   -fx-background-color:  #3F51B5;
+}
+
+
+/*Style of each entire row in the table view when is hovered*/
+.table-row-cell:hover {
+    -fx-background-color:#E8EAF6;
+}
+
+
+/*Style of each entire row in the table view when is getting focused*/
+.table-row-cell:focused {
+    -fx-background-color:#C5CAE9;/*#8C9EFF; */ 
+}
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+ 
+.table-row-cell:empty .table-cell {
+   -fx-border-width: 0px;
+   -fx-border-color: white;
+   -fx-pref-height: 0px;
+}
+
+.headlineLable{
+	-fx-text-fill : green;
+	-fx-font-size: 16px;
+	-fx-highlight-fill: blue ;
+}
+.name_label{
+	/* -fx-text-fill: #aaa; */
+	-fx-font-size:15px;
+	-fx-font-weight:bold;
+}
+.value_label{
+	-fx-text-fill: #aaa;
+	-fx-font-size:15px;
+}
+.errorLabel{
+	-fx-background-color: #FFCDD2;
+	-fx-font-size: 18px;
+	-fx-font-weight:bold;
+	-fx-text-fill: white;
+}
+
+/* The main scrollbar CSS class of ListView */
+.scroll-bar:horizontal ,.scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+/* The increment and decrement button CSS class of scrollbar */
+.increment-button ,.decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(gray,80%);
+}
+/* The main scrollbar **track** CSS class  */
+.scroll-bar:horizontal .track ,.scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+     -fx-border-color:derive(gray,80%);
+     -fx-background-radius: 0em;
+}
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+.image_icon{
+	-fx-cursor: hand;
+	-fx-background-color: transparent;
+}
+.image_icon:hover{
+    -fx-background-color : #D8D8D8;
+}
+.icon_tool_tip{
+	-fx-base: #AE3522;
+	-fx-text-fill: white;
+}

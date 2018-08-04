@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.cdms.controller.HomeController">
+   <content>
+      <AnchorPane styleClass="pref_anchorPane" stylesheets="@../fxcss/application.css">
+         <children>
+            <HBox fx:id="mainHbox" layoutX="175.0" layoutY="212.0" spacing="5.0">
+               <children>
+                  <VBox prefHeight="325.0" prefWidth="255.0" style="-fx-background-color: #18FFFF;" styleClass="vboxMain">
+                     <children>
+                        <Label prefHeight="51.0" prefWidth="255.0" style="-fx-padding: 2px;" styleClass="vboxMainPageLabel" text="Product Panel">
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets top="2.0" />
+                           </opaqueInsets>
+                        </Label>
+                        <Label accessibleText="newProductScreen" prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Add New Product">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Update Price &amp; Scheme">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Product Detail">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="325.0" prefWidth="255.0" style="-fx-background-color: #18FFFF;" styleClass="vboxMain">
+                     <children>
+                        <Label prefHeight="51.0" prefWidth="255.0" style="-fx-padding: 2px;" styleClass="vboxMainPageLabel" text="Stock Panel">
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="View Current Stock">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Datewise Current Stock">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Add purchase Qty">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Datewise Sale detail">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="325.0" prefWidth="255.0" style="-fx-background-color: #18FFFF;">
+                     <children>
+                        <Label prefHeight="51.0" prefWidth="255.0" style="-fx-padding: 2px;" styleClass="vboxMainPageLabel" text="Sale Panel">
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Sell Products">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="325.0" prefWidth="255.0" style="-fx-background-color: #18FFFF;" styleClass="vboxMain">
+                     <children>
+                        <Label prefHeight="51.0" prefWidth="255.0" style="-fx-padding: 2px;" styleClass="vboxMainPageLabel" text="Customer Panel">
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets top="2.0" />
+                           </opaqueInsets>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Add New Customer">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Add &amp; Update Customer ">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="43.0" prefWidth="255.0" styleClass="vboxSubcontenlabel" text="Customer account transation detail" wrapText="true">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <opaqueInsets>
+                  <Insets top="2.0" />
+               </opaqueInsets>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<StackPane stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.UpdtPrdctPriceSchemeController">
+<children>
+<BorderPane>
+   <top>
+   		<HBox fx:id="headLineHbox" alignment="CENTER" prefHeight="31.0" style="-fx-background-color: #e5eaf5;" BorderPane.alignment="CENTER">
+        	<children>
+            	<Label prefHeight="57.0" styleClass="custome_label" text="Update Product" />
+            </children>
+        </HBox>
+   </top>
+   <center>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <ScrollPane fitToWidth="true" prefViewportWidth="${headLineHbox.width-78.0}">
+                     <content>
+                        <StackPane alignment="TOP_CENTER">
+                           <children>
+                              <VBox styleClass="cu" stylesheets="@../fxcss/application.css">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="55.0">
+                                       <children>
+                                          <Label fx:id="groupNameLabel" alignment="CENTER" prefHeight="53.0" prefWidth="285.0" style="-fx-font-size: 20px;" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="64.0" style="-fx-border-width: 1.0px 0px 0px 0px; -fx-border-color: #E0E0E0;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="51.0" prefWidth="155.0" style="-fx-font-sIze: 18px; -fx-background-color: #607D8B; -fx-text-fill: #ffffff;" text="Products" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="350.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #E0E0E0; -fx-padding: 5px;">
+                                       <children>
+                                          <VBox prefHeight="292.0">
+                                             <children>
+                                                <Label prefHeight="25.0" prefWidth="77.0" styleClass="headlineLable" text="Available" />
+                                                <JFXListView fx:id="groupProdctListView" prefWidth="365.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="292.0" prefWidth="232.0">
+                                             <children>
+                                                <Hyperlink style="-fx-font-size: 14px;">
+                                                   <graphic>
+                                                      <ImageView fitHeight="47.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/double_arrow_right.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Hyperlink>
+                                                <ImageView fitHeight="40.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true" />
+                                                <Hyperlink style="-fx-font-size: 14px;">
+                                                   <graphic>
+                                                      <ImageView fitHeight="47.0" fitWidth="130.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/double_arrow_right.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Hyperlink>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="292.0">
+                                             <children>
+                                                <Label prefHeight="25.0" prefWidth="80.0" styleClass="headlineLable" text="Selected" />
+                                                <JFXListView fx:id="selectedProductListView" prefWidth="365.0" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="78.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #E0E0E0;">
+                                       <children>
+                                          <JFXTextField fx:id="priceTextFld" alignment="BOTTOM_CENTER" labelFloat="true" prefHeight="41.0" prefWidth="353.0" promptText="Price" styleClass="custom_textField" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="64.0" spacing="2.0" style="-fx-border-width: 1.0px 0px 0px 0px; -fx-border-color: #E0E0E0;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="51.0" prefWidth="155.0" style="-fx-font-sIze: 18px; -fx-background-color: #607D8B; -fx-text-fill: #ffffff;" text="Schemes" />
+                                          <Hyperlink onAction="#openSchemeDialog" prefHeight="48.0" prefWidth="39.0" style="-fx-font-size: 27px; -fx-border-width: 1px; -fx-border-color: #D8D8D8; -fx-font-weight: bold;" text="+" />
+                                       </children>
+                                    </HBox>
+                                    <TreeTableView fx:id="schemeOptionsTreeView" prefHeight="153.0">
+                                       <columns>
+                                          <TreeTableColumn fx:id="schemeOptionTreeCol" prefWidth="907.0" text="Scheme Options" />
+                                          <TreeTableColumn fx:id="actionCol" prefWidth="191.0" text="Action" />
+                                       </columns>
+                                    </TreeTableView>
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </VBox>
+                           </children>
+                        </StackPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="40.0" spacing="5.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #E0E0E0;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton buttonType="RAISED" onAction="#goBack" prefHeight="46.0" prefWidth="114.0" style="-fx-font-size: 15px;" text="Back">
+               <styleClass>
+                  <String fx:value="button_raised" />
+                  <String fx:value="custom_button" />
+               </styleClass></JFXButton>
+            <JFXButton buttonType="RAISED" onAction="#UpdateScheme" prefHeight="40.0" style="-fx-font-size: 15px;" text="Update">
+               <styleClass>
+                  <String fx:value="button_raised" />
+                  <String fx:value="custom_button" />
+               </styleClass></JFXButton>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
+</children>
+</StackPane>

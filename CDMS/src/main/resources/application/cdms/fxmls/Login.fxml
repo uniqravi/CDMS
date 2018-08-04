@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPn" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <center>
+      <AnchorPane accessibleRole="IMAGE_VIEW" prefHeight="399.0" prefWidth="408.0" style="-fx-background-color: #e5eaf5;" stylesheets="@../fxcss/application.css">
+         <children>
+            <Pane layoutX="20.0" layoutY="12.0" prefHeight="384.0" prefWidth="390.0" style="-fx-background-color: #e5eaf5;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+               <children>
+               	<Label alignment="CENTER" layoutX="20.0" layoutY="14.0" prefHeight="37.0" prefWidth="329.0" style="-fx-background-color: #e5eaf5;" text="CDMS Login" textFill="#0033ff">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <JFXTextField fx:id="txtUsername" alignment="BOTTOM_LEFT" focusColor="#03a9f4" labelFloat="true" layoutX="39.0" layoutY="72.0" prefColumnCount="20" prefHeight="46.0" prefWidth="291.0" promptText="username">
+                     <font>
+                        <Font name="Arial" size="21.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="txtPassword" alignment="BOTTOM_LEFT" focusColor="#03a9f4" labelFloat="true" layoutX="39.0" layoutY="153.0" prefHeight="46.0" prefWidth="291.0" promptText="password">
+                     <font>
+                        <Font name="Arial" size="21.0" />
+                     </font>
+                  </JFXPasswordField>
+                  <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="42.0" layoutY="239.0" onAction="#login" prefHeight="46.0" prefWidth="291.0" style="-fx-background-color: #0000FF;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="22.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="errorLabel" alignment="CENTER" layoutX="23.0" layoutY="305.0" prefHeight="28.0" prefWidth="329.0" style="-fx-background-color: #e5eaf5;" textFill="#ff004d">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

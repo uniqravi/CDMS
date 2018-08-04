@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="pref_anchorPane" stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.cdms.controller.HomeController">
+   <children>
+      <StackPane prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane fx:id="mainScreenGridPane">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.0" minWidth="10.0" prefWidth="199.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1051.0" minWidth="10.0" prefWidth="1001.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="261.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="762.0" minHeight="10.0" prefHeight="761.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXHamburger fx:id="menuIcon" prefHeight="39.0" prefWidth="211.0" />
+               </children>
+            </GridPane>
+         </children>
+      </StackPane>
+      <JFXDrawer fx:id="menuDrawer" defaultDrawerSize="220.0" AnchorPane.topAnchor="70.0" />
+   </children>
+</AnchorPane>

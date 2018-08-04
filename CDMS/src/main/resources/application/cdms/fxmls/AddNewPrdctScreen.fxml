@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-padding: 10;" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.ProductController">
+   <children>
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="700.0" prefViewportWidth="800.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,152,217,0.8), 10, 0, 0, 0);" StackPane.alignment="TOP_CENTER">
+         <content>
+            <VBox alignment="CENTER" prefHeight="900.0" style="-fx-background-color: #e5eaf5;" stylesheets="@../fxcss/application.css">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="45.0">
+                     <children>
+                        <Label prefHeight="47.0" prefWidth="210.0" styleClass="custome_label" text="Add New Product" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXDatePicker fx:id="newPrdctAddingDt" defaultColor="#536dfe" prefHeight="54.0" prefWidth="356.0" promptText="Date" styleClass="custom_datepicker" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="46.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXToggleButton fx:id="fillingQtyNew" prefHeight="58.0" prefWidth="184.0" styleClass="customeToggle" text="New Filling            " toggleColor="#536dfe" toggleLineColor="#536dfe" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="mlComboBox" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="ML(Qty)" styleClass="custom_grid_combobox" />
+                        <JFXTextField fx:id="mlFillingText" disable="true" labelFloat="true" prefHeight="54.0" prefWidth="364.0" promptText="ML(Qty)" styleClass="custom_textField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="46.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXToggleButton fx:id="newFlavour" prefHeight="58.0" prefWidth="189.0" styleClass="customeToggle" text="New Flavour           " toggleColor="#536dfe" toggleLineColor="#536dfe" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="flavrComboBox" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="Flavour Name" styleClass="custom_grid_combobox" />
+                        <JFXTextField fx:id="flavrText" disable="true" labelFloat="true" prefHeight="54.0" prefWidth="364.0" promptText="Flavour Name" styleClass="custom_textField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="46.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXToggleButton fx:id="newPakingType" prefHeight="58.0" prefWidth="185.0" styleClass="customeToggle" text="New Packing Type" toggleColor="#536dfe" toggleLineColor="#536dfe" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="pakingTypeComboBox" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="Packing Type" styleClass="custom_grid_combobox" />
+                        <JFXTextField fx:id="packingTypeText" disable="true" labelFloat="true" prefHeight="54.0" prefWidth="364.0" promptText="Packing Type" styleClass="custom_textField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="46.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXToggleButton fx:id="newPakingQty" prefHeight="58.0" prefWidth="186.0" styleClass="customeToggle" text="New Packing QTY " toggleColor="#536dfe" toggleLineColor="#536dfe" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="pakingQtyComboBox" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="Packing (Qty)" styleClass="custom_grid_combobox" />
+                        <JFXTextField fx:id="pakingQtyText" disable="true" labelFloat="true" prefHeight="54.0" prefWidth="364.0" promptText="Packing (Qty)" styleClass="custom_textField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="groupNmText" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="select Group" styleClass="custom_grid_combobox" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" styleClass="hox_input">
+                     <children>
+                        <JFXComboBox fx:id="hsnCombox" labelFloat="true" prefHeight="53.0" prefWidth="390.0" promptText="select HSN" styleClass="custom_grid_combobox" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="86.0" styleClass="hox_toggle_css">
+                     <children>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#addNewProduct" prefHeight="50.0" prefWidth="291.0" styleClass="custom_button" text="Add Product" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</StackPane>

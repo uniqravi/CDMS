@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import application.cdms.component.data.handler.NestedPropertyValueFactory?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.InvoiceReportDisplayController">
+   <children>
+      <BorderPane>
+         <top>
+            <HBox fx:id="headLine" alignment="CENTER" prefHeight="31.0" style="-fx-background-color: #e5eaf5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="57.0" styleClass="custome_label" text="Confirmation Screen" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox fx:id="centerContentVbox" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane prefViewportHeight="${centerContentVbox.height}">
+                     <content>
+                        <VBox>
+                     		<children>
+                        		<Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Buyer Detail" underline="true" />
+                        		<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.5px 0px 0px 0px;">
+                           			<children>
+                              			<Label prefHeight="37.0" prefWidth="161.0" styleClass="name_label" text="Customer Id :" />
+                              			<Label fx:id="cstmrId_label" prefHeight="37.0" prefWidth="420.0" styleClass="value_label" />
+                           			</children>
+                        		</HBox>
+                        		<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
+                           			<children>
+                              			<Label prefHeight="37.0" prefWidth="149.0" styleClass="name_label" text="Buyer Name :" />
+                              			<Label fx:id="cstmrName_label" prefHeight="37.0" prefWidth="518.0" styleClass="value_label" />
+                              			<Label prefHeight="37.0" prefWidth="149.0" styleClass="name_label" text="Address :" />
+                              			<Label fx:id="address_label" prefHeight="37.0" prefWidth="518.0" styleClass="value_label" />
+                           			</children>
+                        		</HBox>
+                        		<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
+                           			<children>
+                              			<Label prefHeight="37.0" prefWidth="149.0" styleClass="name_label" text="Account No :" />
+                             			<Label fx:id="cstmrAcntNo_label" prefHeight="37.0" prefWidth="518.0" styleClass="value_label" />
+                              			<Label prefHeight="37.0" prefWidth="149.0" styleClass="name_label" text="Account Type :" />
+                              			<Label fx:id="ledgerTypeNm_label" prefHeight="37.0" prefWidth="518.0" styleClass="value_label" />
+                           			</children>
+                        		</HBox>
+                        		<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
+                           			<children>
+                              			<Label prefHeight="37.0" prefWidth="149.0" styleClass="name_label" text="Special Discount :" />
+                              			<Label fx:id="discountQty_label" prefHeight="37.0" prefWidth="518.0" styleClass="value_label" />
+                           			</children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                        		</HBox>
+                        		<HBox alignment="BOTTOM_LEFT" prefHeight="40.0" style="-fx-border-width: 1.5px 0 1.5px 0; -fx-border-color: #E0E0E0; -fx-effect: dropshadow(three-pass-box, rgba(155,152,155,0.2), 0, 5, 2, 0);">
+                           			<children>
+                              			<Label prefHeight="33.0" prefWidth="143.0" styleClass="headlineLable" text="Sell Product Detail" underline="true" />
+                           			</children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                        		</HBox>
+                              <ScrollPane fx:id="sellSScrollPane" prefViewportWidth="${centerContentVbox.width-20}">
+                              		<content> 
+     									<VBox>
+                                       <children>
+                                          <TableView fx:id="sell_table" fixedCellSize="40.0" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                            	<TableColumn fx:id="sr_col" prefWidth="30.0" text="Sr No" />
+                                            	<TableColumn fx:id="prdctGroup_col" prefWidth="280.0" text="Beverage Group" />
+                                            	<TableColumn fx:id="prdct_col" prefWidth="300.0" text="Product" />
+                                            	<TableColumn fx:id="sellingPrdctGroupQty_col" prefWidth="50.0" text="Qty" />
+                                            	<TableColumn fx:id="baseRatePrCs_col" prefWidth="65.0" text="Base Rate per c/s" />
+                                            	<TableColumn fx:id="netBaseAmt_col" prefWidth="90.0" text="Net Base Amount" />
+                                            	<TableColumn fx:id="scheme_discnt_PerCs_col" text="Scheme/Discount per c/s" />
+                                            	<TableColumn fx:id="scheme_discnt_col" prefWidth="90.0" text="Scheme/Discount Amt" />
+                                            	<TableColumn fx:id="ttlTaxableAmt_col" prefWidth="97.0" text="Total Taxable Amount" />
+                                            	<TableColumn prefWidth="160.0" text="SGST">
+                                            		<columns>
+                                                		<TableColumn fx:id="sgstRate_col" prefWidth="50.0" text="Rate %" />
+                                                		<TableColumn fx:id="sgstAmt_col" prefWidth="110.0" text="Amount" />
+                                             		</columns>
+                                          		</TableColumn>
+                                          		<TableColumn prefWidth="160.0" text="CGST">
+                                          			<columns>
+                                                		<TableColumn fx:id="cgstRate_col" prefWidth="50.0" text="Rate %" />
+                                                		<TableColumn fx:id="cgstAmt_col" prefWidth="110.0" text="Amount" />
+                                                	</columns>
+                                                </TableColumn>
+                                                <TableColumn prefWidth="160.0" text="IGST">
+                                                   <columns>
+                                                      <TableColumn fx:id="igstRate_col" prefWidth="50.0" text="Rate %" />
+                                                      <TableColumn fx:id="igstAmt_col" prefWidth="110.0" text="Amount" />
+                                                   </columns>
+                                                </TableColumn>
+                                                <TableColumn prefWidth="160.0" text="CESS">
+                                             		<columns>
+                                                		<TableColumn fx:id="cessRate_col" prefWidth="50.0" text="Rate %" />
+                                                		<TableColumn fx:id="cessAmt_col" prefWidth="110.0" text="Amount" />
+                                             		</columns>
+                                          		</TableColumn>
+                                          		<TableColumn fx:id="netRatePerCs_col" prefWidth="70.0" text="Net Rate Per Cs" />
+                                          		<TableColumn fx:id="netAmt_col" prefWidth="100.0" text="Sys Net Amount" />
+                                          		<TableColumn fx:id="sysSpclDiscnt_col" prefWidth="58.0" text="System Special Discount" />
+                                          		<TableColumn fx:id="discntAdjustment_col" prefWidth="85.0" text="Discount Adjustment" />
+                                          		<TableColumn fx:id="amtAdjustment_col" prefWidth="65.0" text="Amount Adjustment" />
+                                          		<TableColumn fx:id="grossPrdctAmt_col" prefWidth="120.0" text="Net Amount" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView fx:id="sum_table" prefHeight="40.0" styleClass="sum_table">
+                                            <columns>
+                                            	<TableColumn prefWidth="30.0" text="Sr No" />
+                                          		<TableColumn fx:id="sum_totalText_col" prefWidth="280.0" text="Beverage Group" />
+                                          		<TableColumn prefWidth="300.0" text="Product" />
+                                          		<TableColumn fx:id="sum_totalPrdctQty_col" prefWidth="50.0" text="Qty" />
+                                          		<TableColumn prefWidth="65.0" text="Base Rate per c/s" />
+                                          		<TableColumn fx:id="sum_totalBaseAmt_col" prefWidth="90.0" text="Net Base Amount" />
+                                          		<TableColumn text="Scheme/Discount per c/s" />
+                                          		<TableColumn fx:id="sum_schemeDiscnt_col" prefWidth="90.0" text="Scheme/Discount Amt" />
+                                          		<TableColumn prefWidth="97.0" text="Total Taxable Amount" />
+                                          		<TableColumn prefWidth="160.0" text="SGST" />
+                                          		<TableColumn prefWidth="160.0" text="CGST" />
+                                          		<TableColumn prefWidth="160.0" text="IGST" />
+                                          		<TableColumn prefWidth="160.0" text="CESS" />
+                                          		<TableColumn prefWidth="70.0" text="Net Rate Per Cs" />
+                                          		<TableColumn fx:id="sum_totalSysNetAmt_col" prefWidth="100.0" text="Sys Net Amount" />
+                                          		<TableColumn fx:id="sum_sysSpclDisnt_col" prefWidth="58.0" text="System Special Discount" />
+                                          		<TableColumn fx:id="sum_disntAdjustmnt_col" prefWidth="85.0" text="Discount Adjustment" />
+                                          		<TableColumn fx:id="sum_amtAdjustment_col" prefWidth="65.0" text="Amount Adjustment" />
+                                          		<TableColumn fx:id="sum_totalNetAmt_col" prefWidth="120.0" text="Net Amount" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                      </VBox>
+                              		</content>
+                              	</ScrollPane>
+                              	<HBox alignment="BOTTOM_LEFT" prefHeight="40.0" style="-fx-border-width: 1.5px 0 1.5px 0; -fx-border-color: #E0E0E0;">
+                           			<children>
+                              			<Label prefHeight="33.0" prefWidth="167.0" styleClass="headlineLable" text="Scheme Detail" underline="true" />
+                           			</children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                        		</HBox>
+                        		<HBox alignment="CENTER">
+                           <children>
+                              <VBox fx:id="schemeVbox">
+                                 <children>
+                                    <TableView fx:id="schemeTable" fixedCellSize="40.0" VBox.vgrow="ALWAYS">
+                                       <columns>
+                                          <TableColumn fx:id="scheme_sr_col" prefWidth="56.0" text="Sr No" />
+                                          <TableColumn prefWidth="600.0" text="Scheme Given For">
+                                             <columns>
+                                                <TableColumn fx:id="SchemeForGrp_col" prefWidth="300.0" text="Beverage Group" />
+                                                <TableColumn fx:id="schemeForPrdct_col" prefWidth="300.0" text="Beverage Product" />
+                                           </columns>
+                                          </TableColumn>
+                                          <TableColumn fx:id="schemePrdct_col" prefWidth="300.0" text="Scheme Beverage Product">
+                                          <cellValueFactory>
+                                          <NestedPropertyValueFactory property="schemePrdct.productNm" />
+                                          </cellValueFactory>
+                                          </TableColumn>
+                                          <TableColumn fx:id="qty_col" prefWidth="75.0" text="Qty(B/s)" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_LEFT" prefHeight="40.0" spacing="20.0" style="-fx-border-width: 1.5px 0 1.5px 0; -fx-border-color: #E0E0E0;">
+                           <children>
+                              <Label prefHeight="33.0" prefWidth="167.0" styleClass="headlineLable" text="Brekage Detail" underline="true" />
+                           </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <TableView fx:id="brekageTable" fixedCellSize="25.0" VBox.vgrow="ALWAYS">
+                                       <columns>
+                                          <TableColumn fx:id="brekage_Prdct_col" prefWidth="350.0" text="Beverage Product" />
+                                          <TableColumn fx:id="breakage_qty_col" prefWidth="100.0" text="Qty" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.5px 0 0 0;">
+                           <children>
+                              <VBox style="-fx-padding: 10px; -fx-border-color: #E0E0E0; -fx-border-width: 0px 1px 0px 0px;">
+                                 <children>
+                                    <Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Payment" underline="true" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="39.0" prefWidth="193.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="System Generated Amounts" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Net Amount :" />
+                                          <Label fx:id="sysGnrtdTotalAmount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Scheme Discount :" />
+                                          <Label fx:id="totalSchemeDiscnt_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Special Discount :" />
+                                          <Label fx:id="sysGnrtdTotalDiscount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="15.0" prefWidth="604.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Total :" />
+                                          <Label fx:id="afterSysSchmeNSpclDicntTotalNet_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="39.0" prefWidth="81.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Adjustment" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Amount Adjustment :" />
+                                          <Label fx:id="totalAdjustmentDiscount" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Adjustment Discount :" />
+                                          <Label fx:id="totalAmountAdjustment" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Gross Amount :" />
+                                          <Label fx:id="totalNetActualAmount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Previous :" />
+                                          <Label fx:id="totalPrevDueAmount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Payable Amount :" />
+                                          <Label prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="48.0">
+                                       <children>
+                                          <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Amount Paid :" />
+                                          <Label fx:id="paidAmount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="16.0" prefWidth="604.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Balance :" />
+                                       	  <Label fx:id="totalNetDueAmount_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox style="-fx-padding: 10px;">
+                                 <children>
+                                    <Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Other" underline="true" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="39.0" prefWidth="85.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Empty Glass" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="48.0">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Total Glass :" />
+                                       	  <Label fx:id="totalDeliverBsGlass_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="48.0">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Previous Glass :" />
+                                       	  <Label prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="15.0" prefWidth="604.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Total :" />
+                                       	  <Label prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="48.0">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Return Glass :" />
+                                       	  <Label fx:id="totalReturnBsGlass_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="15.0" prefWidth="604.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Balance Empty :" />
+                                       	  <Label prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                          <Label prefHeight="39.0" prefWidth="37.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Cell" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                       <children>
+                                       	  <Label prefHeight="37.0" prefWidth="211.0" styleClass="name_label" text="Extra Given Cell :" />
+                                       	  <Label fx:id="extraGivenCell_label" prefHeight="37.0" prefWidth="393.0" styleClass="value_label" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="60.0" spacing="20.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                           <children>
+                              <JFXButton fx:id="editButton" buttonType="RAISED" onAction="#goBack" prefHeight="40.0" prefWidth="200.0" styleClass="custom_button" text="Edit" />
+                              <JFXButton fx:id="confirmButton" buttonType="RAISED" onAction="#sellProduct" prefHeight="40.0" prefWidth="200.0" styleClass="custom_button" text="Confirm" />
+                              <JFXButton fx:id="printInvoiceButton" buttonType="RAISED" onAction="#printInvoice" prefHeight="40.0" prefWidth="200.0" styleClass="custom_button" text="Print Invoice" />
+                           </children>
+                        </HBox>
+                        	</children>
+                        </VBox>                        
+                     </content>
+                  </ScrollPane>
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.SideNavigationController">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="360.0" stylesheets="@../fxcss/application.css">
+         <children>
+            <Accordion>
+              <panes>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Home">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="50" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="homeVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="home" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Home" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Product Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="productPaneVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="addNewPrdct" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Add New Beverage Product" textFill="WHITE" />
+                                    <Label accessibleText="addNewNonBevPrdct" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Add New Non Beverage Product" textFill="WHITE" />
+                                    <Label accessibleText="updatePriceScheme" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="View or Update Product Price &amp; Scheme" textFill="WHITE" />
+                                  <!--   <Label prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Disable or Enable Product" textFill="WHITE" /> -->
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Purchase Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="purchasePanelVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="addPurchasedQty" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Add Purchase Qty" textFill="WHITE" />
+                                    <Label accessibleText="updatePaymentDetails" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Update Payment Detail" textFill="WHITE" />
+                                    <Label accessibleText="purchaseTaxDtl" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="View Purchase &amp; Tax Details" textFill="WHITE" />
+                                    <Label accessibleText="returnPurchaseInvoice" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Return Purchase Invoice" textFill="WHITE" />
+                                    <Label accessibleText="returnBottleShellInvoice" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Return Bottle/Shell Invoice" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Stock Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="stockPanelVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                   <!--  
+                                   	<Label prefHeight="31.0" prefWidth="399.0" styleClass="subcontenlabel" text="View Current Stock" textFill="WHITE" />
+                                    <Label prefHeight="31.0" prefWidth="399.0" styleClass="subcontenlabel" text="View Datewise Stock" textFill="WHITE" /> 
+                                    -->
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Sale panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="salePanelVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="sellProduct" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Sale - Sale Product " textFill="WHITE" />
+                                    <!-- 
+                                    <Label accessibleText="sellProduct" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Sale - View All Salings " textFill="WHITE" />
+                                   	<Label accessibleText="SupplyEntry" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Supply Entry" textFill="WHITE" />
+                                    <Label accessibleText="supplyRecord" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Supply History" textFill="WHITE" />
+                                     -->
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Customer Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="cstmrPanelVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="addNewCstmr" prefHeight="32.0" prefWidth="399.0" styleClass="subcontenlabel" text="Add New Customer" textFill="WHITE" />
+                                    <Label accessibleText="createNewLedger" prefHeight="32.0" prefWidth="397.0" styleClass="subcontenlabel" text="Create Ledger Account" textFill="WHITE" />
+                                    <Label prefHeight="32.0" prefWidth="397.0" styleClass="subcontenlabel" text="View Customer Ledgers" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Claim Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="claimVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="breakgeClaimForm" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Generate Breakage Claim Form" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Report Panel">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox fx:id="reportPanelVbox" style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label accessibleText="purchaseTaxReport" prefHeight="9.0" prefWidth="398.0" styleClass="subcontenlabel" text="Purchase Tax Report" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="TOP_RIGHT" animated="false" styleClass="side_menu_titled-pane" text="Master">
+                     <content>
+                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="200" prefViewportWidth="100">
+                           <content>
+                              <VBox style="-fx-background-color: #3f51b5;">
+                                 <children>
+                                    <Label prefHeight="32.0" prefWidth="399.0" styleClass="subcontenlabel" text="Add New Vehicle" textFill="WHITE" />
+                                    <Label prefHeight="32.0" prefWidth="399.0" styleClass="subcontenlabel" text="Add Territory " textFill="WHITE" />
+                                    <Label prefHeight="32.0" prefWidth="399.0" styleClass="subcontenlabel" text="Create New Customer Category " textFill="WHITE" />
+                                    <Label prefHeight="32.0" prefWidth="399.0" styleClass="subcontenlabel" text="Add HSN Category " textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

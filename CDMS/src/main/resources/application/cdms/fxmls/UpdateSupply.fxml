@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import application.cdms.component.data.handler.NestedPropertyValueFactory?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.ReturnSupplyEntryController">
+   <children>
+      <BorderPane>
+         <top>
+            <HBox fx:id="headLine" alignment="CENTER" prefHeight="31.0" style="-fx-background-color: #e5eaf5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="57.0" styleClass="custome_label" text="Return Supply Assessment" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+         <SplitPane dividerPositions="0.4" orientation="VERTICAL">
+               <items>
+            <VBox fx:id="centerContentVbox" spacing="20.0">
+               <children>
+                  <VBox fx:id="inputVbox">
+                     <children>
+                        <HBox alignment="CENTER" spacing="20.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
+                           <children>
+                              <Label prefHeight="37.0" prefWidth="161.0" styleClass="name_label" text="From Date" />
+                              <JFXDatePicker fx:id="fromDtTextFld" prefHeight="28.0" prefWidth="245.0" />
+                              <Label prefHeight="37.0" prefWidth="161.0" styleClass="name_label" text="To Date" />
+                              <JFXDatePicker fx:id="toDtTextFld" prefHeight="28.0" prefWidth="245.0" />
+                              <JFXButton buttonType="RAISED" prefHeight="28.0" prefWidth="111.0" style="-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;" text="Search" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ScrollPane prefViewportHeight="${centerContentVbox.height-inputVbox.height}">
+                     <content>
+                        <VBox>
+                           <children>
+                              <TableView fx:id="purchaseSummeryLstTable">
+                                <columns>
+                                  <TableColumn fx:id="supplyDt" prefWidth="174.0" text="Date" />
+                                  <TableColumn fx:id="supplyName" prefWidth="193.0" text="Supply Name" />
+                                  <TableColumn fx:id="route" prefWidth="193.0" text="Route Area">
+                                  	<cellValueFactory><PropertyValueFactory property="routeCovered" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn fx:id="workerName" prefWidth="193.0" text="Worker Name">
+                                  	<cellValueFactory><PropertyValueFactory property="supplyWorkerName" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn fx:id="vehicle" prefWidth="193.0" text="Vehicle">
+                                  	<cellValueFactory><PropertyValueFactory property="vehicle" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn prefWidth="91.0" text="Glass Qty">
+                                  	<cellValueFactory><PropertyValueFactory property="totalGlassBsSent" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn prefWidth="91.0" text="Return Glass Qty">
+                                  	<cellValueFactory><PropertyValueFactory property="actualReturnBsGlass" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn prefWidth="91.0" text="Cell Qty">
+                                  	<cellValueFactory><PropertyValueFactory property="totalCellSent" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn prefWidth="91.0" text="Return Cell Qty" >
+                                  	<cellValueFactory><PropertyValueFactory property="actualCellReturn" /></cellValueFactory>
+                                  </TableColumn>
+                                  <TableColumn fx:id="isAssessmentDone" prefWidth="91.0" text="Assessment Status" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+                  <VBox>
+                     <children>
+                        <JFXTabPane>
+                           <tabs>
+                              <Tab text="Product Detail">
+                              	<content>
+                              		<ScrollPane prefViewportWidth="${centerContentVbox.width}">
+                     					<content>
+                              				<VBox>
+                                       			<children>
+                                          			<TableView fx:id="prdctViewTable" fixedCellSize="34">
+                                            			<columns>
+                                              				<TableColumn minWidth="50.0" prefWidth="191.0" text="Group Name">
+                                              					<cellValueFactory>
+                                              					<NestedPropertyValueFactory property="product.groupNm" />
+                                              					</cellValueFactory>
+                                              				</TableColumn>
+                                              				<TableColumn minWidth="50.0" prefWidth="299.0" text="Product Name">
+                                              					<cellValueFactory>
+                                              					<NestedPropertyValueFactory property="product.productNm" />
+                                              					</cellValueFactory>
+                                              				</TableColumn>
+                                                			<TableColumn minWidth="50.0" prefWidth="95.0" text="Qty (C/s)">
+                                                				<cellValueFactory><PropertyValueFactory property="totalSentPrdctQty" /></cellValueFactory>
+                                                			</TableColumn>
+                                                			<TableColumn minWidth="50.0" prefWidth="179.0" text="Qty (B/s)">
+                                                				<cellValueFactory><PropertyValueFactory property="totalBaseAmt" /></cellValueFactory>
+                                                			</TableColumn>
+                                                			<TableColumn minWidth="50.0" prefWidth="95.0" text="Per C/s Price">
+                                                				<cellValueFactory><PropertyValueFactory property="netPerCsPrice" /></cellValueFactory>
+                                                			</TableColumn>
+                                            			</columns>
+                                          			</TableView>
+                                       			</children></VBox>
+                                       	</content>
+                                       </ScrollPane>
+                              	</content>
+                              </Tab>
+                           </tabs>
+                        </JFXTabPane>
+                     </children>
+                  </VBox>
+            	</items>
+            </SplitPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

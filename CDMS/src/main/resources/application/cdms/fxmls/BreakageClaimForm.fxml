@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Tooltip?>
+
+<StackPane stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.BreakageClaimFormGeneratorController">
+   <children>
+      <BorderPane>
+         <top>
+            <HBox fx:id="headLineHbox" alignment="CENTER" prefHeight="31.0" style="-fx-background-color: #e5eaf5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="57.0" styleClass="custome_label" text="Breakage Claim Form" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox fx:id="centerContentVbox" spacing="5.0" style="-fx-background-color: #e5eaf5;">
+               <children>
+                                       					<VBox spacing="10.0" style="-fx-padding: 5px; -fx-border-width: 0 1px 0 0; -fx-border-color: #E0E0E0; -fx-background-color: white;">
+                                            		<children>
+                                                      <HBox alignment="BOTTOM_LEFT" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1.0px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="25.0" prefWidth="144.0" styleClass="headlineLable" text="Company Detail" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="46.0">
+                                                         <children>
+                                                            <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="137.0" styleClass="value_label" text="Firm Name" />
+                                                            <JFXTextField fx:id="firmNmTextFld" prefHeight="38.0" prefWidth="198.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                                                            <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="137.0" styleClass="value_label" text="Address" />
+                                                            <JFXTextField fx:id="addressTextFld" prefHeight="38.0" prefWidth="198.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                                                            <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="137.0" styleClass="value_label" text="GSTN : " />
+                                                            <JFXTextField fx:id="firmGstnTextFld" prefHeight="38.0" prefWidth="198.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" styleClass="image_icon" onMouseClicked="#addBreakagePrdctIntoTbl">
+                                          	 <tooltip><Tooltip text="Add Brekage Product" styleClass="icon_tool_tip"/></tooltip>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="35" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/new_item_add_icon.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button mnemonicParsing="false" styleClass="image_icon">
+                                          	 <tooltip><Tooltip text="Delete Row" styleClass="icon_tool_tip"/></tooltip>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="35" pickOnBounds="true" preserveRatio="true"  >
+                                                   <image>
+                                                      <Image url="@../images/cancel40.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button mnemonicParsing="false" styleClass="image_icon">
+                                          	 <tooltip><Tooltip text="Edit" styleClass="icon_tool_tip"/></tooltip>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" >
+                                                   <image>
+                                                      <Image url="@../images/edit_icon_48.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                          <TableView fx:id="rtnBreakagePrdctTbl" maxWidth="-Infinity">
+                                            <columns>
+                                                <TableColumn prefWidth="75.0" text="Breakage Product Table">
+                                                   <columns>
+                                                      <TableColumn fx:id="sr_col" prefWidth="49.0" text="Sr No" />
+                                                      <TableColumn fx:id="action_col" prefWidth="101.0" text="Action" />
+                                                      <TableColumn fx:id="product_name_col" prefWidth="283.0" text="Product Description">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="prdctGroupDescription" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="productQty_col" prefWidth="88.0" text="Product(Qty)">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="saleQtyInCsBs" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                <TableColumn fx:id="base_per_cs_col" prefWidth="91.0" text="Base Price/Cs">
+                                                   <cellValueFactory>
+                                                      <PropertyValueFactory property="baseRatePerCs" />
+                                                   </cellValueFactory>
+                                                </TableColumn>
+                                                      <TableColumn fx:id="ttlBasePrice_col" prefWidth="121.0" text="Total Base Price">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="netBaseAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="ttlDiscount_col" prefWidth="93.0" text="Total Discount">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="schemeDisocuntAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="netTaxableAmt_col" prefWidth="113.0" text="Net Taxable Amt">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="taxableAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="ttlCGSTAmt_col" prefWidth="95.0" text="CGST Amount">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="cgstAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="ttlSGSTAmt_col" prefWidth="101.0" text="SGST Amount">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="sgstAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="ttlIGSTAmt_col" prefWidth="107.0" text="IGST Amount" />
+                                                      <TableColumn fx:id="ttlCessAmt_col" prefWidth="98.0" text="Cess Amount">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="cessAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                      <TableColumn fx:id="ttlGrossAmt_col" prefWidth="100.0" text="Total Gross Amt">
+                                                         <cellValueFactory>
+                                                            <PropertyValueFactory property="sysGnrtdNetAmt" />
+                                                         </cellValueFactory>
+                                                      </TableColumn>
+                                                   </columns>
+                                                </TableColumn>
+                                            </columns>
+                                          </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                              <HBox alignment="CENTER" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;">
+                                 <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="155.0" styleClass="headlineLable" text="Total Taxable Amt:" />
+                              <JFXTextField fx:id="ttlTaxableAmtTextFld" editable="false" prefHeight="30.0" prefWidth="77.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="38.0" prefWidth="153.0" styleClass="headlineLable" text="Total Net Amt:" />
+                              <JFXTextField fx:id="ttlNetamtTextFld" editable="false" prefHeight="30.0" prefWidth="77.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="139.0" styleClass="value_label" text="Total Glass: " />
+                              <JFXTextField fx:id="ttlGlassTextFld" editable="false" prefHeight="30.0" prefWidth="77.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="118.0" styleClass="value_label" text="Total Cell :" />
+                              <JFXTextField fx:id="ttlCellTextFld" editable="false" prefHeight="30.0" prefWidth="77.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
+                               		</children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                             </children>
+                          </VBox>
+               	</children>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="45.0">
+               <children>
+                  <JFXButton buttonType="RAISED" onAction="#breakageSubmitAction" prefHeight="32.0" prefWidth="129.0" styleClass="custom_button" text="Submit">
+                     <HBox.margin>
+                        <Insets left="100.0" top="5.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</StackPane>

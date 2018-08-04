@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema   xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/reportMetadata" xmlns="http://www.example.org/reportMetadata"   elementFormDefault="qualified">
+
+<xs:element name="xlsReportMetaDataDtl" type="xlsReportMetaDataDtl" />
+<!-- attributes list -->
+<xs:attribute name="valType" type="valType" />
+<xs:attribute name="headercolspan" type="dataIntType" default="0"/>
+<xs:attribute name="headerrowspan" type="dataIntType" default="0"/>
+<xs:attribute name="headerbgcolor" type="colorsType" default="WHITE"/>
+<xs:attribute name="headerfontcolor" type="colorsType" default="BLACK"/>
+<xs:attribute name="datacolspan" type="dataIntType" default="0"/>
+<xs:attribute name="datarowspan" type="dataIntType" default="0"/>
+<xs:attribute name="databgcolor" type="colorsType" default="WHITE"/>
+<xs:attribute name="datafontcolor" type="colorsType" default="BLACK"/>
+<xs:attribute name="headerText" type="xs:string"/>
+<xs:attribute name="dataColName" type="xs:string"/>
+
+<xs:complexType name="xlsReportMetaDataDtl">
+	<xs:sequence>
+		<!-- <xs:element name="reportQuery" type="reportQuery" minOccurs="0" maxOccurs="1"/> -->
+		<xs:element name="reportHeader" type="reportHeader" minOccurs="1" maxOccurs="1"/>
+	</xs:sequence>
+	<xs:attribute name="xlsWorkSheetNm" type="xs:string"/>
+	<xs:attribute name="exportfileNm" type="xs:string" use="optional"/>
+	<xs:attribute name="inputSourcetype" type="xs:string"/>
+</xs:complexType>
+<xs:complexType name="reportHeader">
+	<xs:sequence>
+		<xs:element name="topHeader" type="topHeader" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="groupHeader" type="groupHeader" minOccurs="1" maxOccurs="unbounded"/>
+	</xs:sequence>
+</xs:complexType>
+<!-- 
+<xs:complexType name="reportQuery">
+	
+</xs:complexType>
+ -->
+<xs:complexType name="topHeader" >
+	<xs:attribute name="valType" type="valType" use="required" />
+	<xs:attribute name="headercolspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerrowspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerbgcolor" type="colorsType"  use="optional" default="WHITE" />
+	<xs:attribute name="headerfontcolor" type="colorsType"  use="optional" default="BLACK"/>
+	<xs:attribute name="headerText" type="xs:string" use="required"/>
+</xs:complexType>
+<xs:complexType name="groupHeader">
+	<xs:sequence>
+		<xs:element name="header" type="header" minOccurs="1" maxOccurs="unbounded"/>
+	</xs:sequence>
+	<xs:attribute name="valType" use="required">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="no_group"/>
+				<xs:enumeration value="fixed"/>
+				<xs:enumeration value="tableViewCol"/>
+				<xs:enumeration value="queryCol"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:attribute>
+	<xs:attribute name="headercolspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerrowspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerbgcolor" type="colorsType"  use="optional" default="WHITE" />
+	<xs:attribute name="headerfontcolor" type="colorsType"  use="optional" default="BLACK"/>
+	<xs:attribute name="headerText" type="xs:string" use="optional"/>
+</xs:complexType>
+<xs:complexType name="header">
+	<xs:sequence>
+		<xs:element name="header" type="header" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:sequence>
+	<xs:attribute name="valType" type="valType" use="required"/>
+	<xs:attribute name="headercolspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerrowspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="headerbgcolor" type="colorsType"  use="optional" default="WHITE" />
+	<xs:attribute name="headerfontcolor" type="colorsType"  use="optional" default="BLACK"/>
+	<xs:attribute name="datacolspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="datarrowspan" type="dataIntType" use="optional"/>
+	<xs:attribute name="databgcolor" type="colorsType"  use="optional" default="WHITE" />
+	<xs:attribute name="datafontcolor" type="colorsType"  use="optional" default="BLACK"/>
+	<xs:attribute name="headerText" type="xs:string" use="required"/>
+	<xs:attribute name="dataColName" type="xs:string" use="required"/>
+</xs:complexType>
+<xs:simpleType name="dataStringType">
+	<xs:restriction base="xs:string">
+		<xs:minLength value="4"></xs:minLength>
+		<xs:maxLength value="12"></xs:maxLength>
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="dataIntType">
+	<xs:restriction base="xs:short">
+		<xs:minInclusive value="0"></xs:minInclusive>
+		<xs:maxInclusive value="25"></xs:maxInclusive>
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="colorEnumeration">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BLACK"/>
+				<xs:enumeration value="WHITE"/>
+				<xs:enumeration value="INDIGO"/>
+			</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="colorsType">
+	<xs:union memberTypes="colorEnumeration">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(#([0-9a-fA-F]{6}))"></xs:pattern>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:union>
+</xs:simpleType>
+<xs:simpleType name="valType">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="fixed"/>
+		<xs:enumeration value="tableViewCol"/>
+		<xs:enumeration value="queryCol"/>
+	</xs:restriction>
+</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_LEFT" fillWidth="true" style="-fx-padding: 15px;" stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+   		<children>
+        	<Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Product Qty" underline="true" />
+    			<HBox prefHeight="60.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Product Name" />
+               			<JFXComboBox accessibleText="dilogproductCombo" prefHeight="46.0" prefWidth="366.0" promptText="Product Name" styleClass="custom_grid_combobox" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Product Qty" />
+                        <JFXTextField accessibleText="dilogproductQty" prefHeight="46.0" prefWidth="366.0" promptText="Product Qty" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+                <HBox alignment="BOTTOM_LEFT" prefHeight="25.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                   	<children>
+                       	<Label prefHeight="25.0" prefWidth="133.0" styleClass="headlineLable" text="Amount" underline="true" />
+                   	</children>
+                </HBox>
+                <HBox prefHeight="60.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Base Amount" />
+               			<JFXTextField accessibleText="dilogTtlBaseAmount" prefHeight="46.0" prefWidth="366.0" promptText="Total Base Amount" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Discount" />
+                        <JFXTextField accessibleText="dilogDiscount" prefHeight="46.0" prefWidth="366.0" promptText="Discount" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Taxable Amount" />
+               			<JFXTextField accessibleText="dilogTaxableAmnt" prefHeight="46.0" prefWidth="366.0" promptText="Taxable Amount" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="CGST Amount" />
+                        <JFXTextField accessibleText="dilogcsgt" prefHeight="46.0" prefWidth="366.0" promptText="CGST Amount" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="SGST Amount" />
+               			<JFXTextField accessibleText="dilogSgst" prefHeight="46.0" prefWidth="366.0" promptText="SGST Amount" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Cess Amount" />
+                        <JFXTextField accessibleText="dilogCess" prefHeight="46.0" prefWidth="366.0" promptText="Cess Amount" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="IGST Amount" />
+               			<JFXTextField accessibleText="dilogIgst" prefHeight="46.0" prefWidth="366.0" promptText="IGST Amount" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Gross Amount" />
+                        <JFXTextField accessibleText="dilogGrossAmnt" prefHeight="46.0" prefWidth="366.0" promptText="Gross Amount" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="MRP" />
+               			<JFXTextField accessibleText="dilogMrp" prefHeight="46.0" promptText="MRP " styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox alignment="BOTTOM_LEFT" prefHeight="51.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                   	<children>
+                       	<Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Breakage Details" underline="true" />
+                   	</children>
+                </HBox>
+                <HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Burst(B/s)" />
+               			<JFXTextField accessibleText="dilogburst" prefHeight="46.0" prefWidth="366.0" promptText="Burst(B/s)" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Leakage(B/s)" />
+                        <JFXTextField accessibleText="dilogLeakage" prefHeight="46.0" prefWidth="366.0" promptText="Leakage(B/s)" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Shortage(B/s)" />
+               			<JFXTextField accessibleText="dilogShortage" prefHeight="46.0" prefWidth="366.0" promptText="Shortage(B/s)" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="SealPackShortage(B/s)" />
+                        <JFXTextField accessibleText="dilogSealPackShortageQty" prefHeight="46.0" prefWidth="366.0" promptText="SealPackShortage(B/s)" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Open Mouth(B/s)" />
+               			<JFXTextField accessibleText="dilogOpenMouth" prefHeight="46.0" prefWidth="366.0" promptText="Open Mouth(B/s)" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox alignment="TOP_CENTER" prefHeight="60.0" spacing="10.0">
+                	<children>
+              			<JFXButton buttonType="RAISED" prefHeight="57.0" prefWidth="140.0" styleClass="custom_button" text="Add" />
+            			<JFXButton buttonType="RAISED" prefHeight="57.0" prefWidth="140.0" styleClass="custom_button" text="Cancel" />
+                    </children>
+               	</HBox>
+       	</children>
+ 	</VBox>

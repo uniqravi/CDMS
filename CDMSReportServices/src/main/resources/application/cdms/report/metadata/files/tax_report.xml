@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xlsReportMetaDataDtl xlsWorkSheetNm="{currentMonth}-{currentYear}" inputSourcetype="fxTableViewType" exportfileNm="D:\\Tax-Report" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://www.example.org/reportMetadata"  
+xsi:schemaLocation="http://www.example.org/reportMetadata xlsReportMetadata.xsd">
+	<!--
+	<reportQuery>
+		<queryString></queryString>
+		<queryParam index='' beanInstanceVarNm=''></queryParam>
+	</reportQuery>
+	-->
+	<reportHeader>
+		<topHeader  valType="fixed" headercolspan="5" headerrowspan="2" headerbgcolor="#C5CAE9" headerfontcolor="BLACK" headerText="KHANDELWAL COLD DRINKS, JUREHRA"/>
+		<groupHeader valType='no_group'>
+			<header headerText='Hsn Code'  headerbgcolor='INDIGO' headerfontcolor="WHITE"  valType='tableViewCol' dataColName="Hsn Code"/>
+			<header headerText='Tax Description'  headerbgcolor='INDIGO' headerfontcolor='WHITE'  valType='tableViewCol' dataColName="Tax description"/>
+			<header headerText='Total Cgst'  headerbgcolor='INDIGO' headerfontcolor='WHITE'  valType='tableViewCol' dataColName="CGST Amount"/>
+			<header headerText='Total Sgst' headerbgcolor='INDIGO' headerfontcolor='WHITE'   valType='tableViewCol' dataColName="SGST Amount"/>
+			<header headerText='Total Igst'  headerbgcolor='INDIGO' headerfontcolor='WHITE'   valType='tableViewCol' dataColName="IGST Amount"/>
+			<header headerText='Total Cess'  headerbgcolor='INDIGO' headerfontcolor='WHITE'   valType='tableViewCol' dataColName="Cess Amount"/>
+		</groupHeader>
+	</reportHeader>
+</xlsReportMetaDataDtl>

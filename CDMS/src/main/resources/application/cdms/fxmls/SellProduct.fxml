@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane stylesheets="@../fxcss/application.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cdms.controllers.SellProductController">
+   <children>
+      <BorderPane>
+         <top>
+            <HBox fx:id="headLineHBox" alignment="CENTER" prefHeight="31.0" style="-fx-background-color: #e5eaf5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="57.0" styleClass="custome_label" text="Sell Invoice" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <ScrollPane BorderPane.alignment="CENTER">
+               <content>
+                  <VBox style="-fx-padding: 0px 6px 0px 6px; -fx-background-color: #e5eaf5;;" prefWidth="${headLineHBox.width-30}">
+                     <children>
+                        <JFXTabPane>
+                           <tabs>
+                              <Tab text="Buyer Detail">
+                                <content>
+                                	<VBox alignment="TOP_LEFT" style="-fx-padding: 15px;" prefWidth="${headLineHBox.width-30}">
+                                    	<children>
+                                        	<Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Buyer " underline="true" />
+                                            <HBox prefHeight="50.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
+                                            	<children>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Customer Id" />
+                                                <JFXComboBox fx:id="cstmrcombox" prefHeight="37.0" prefWidth="393.0" styleClass="custom_grid_combobox" />
+                                                <JFXButton buttonType="RAISED" onAction="#custmrIdReset" prefHeight="28.0" prefWidth="95.0" style="-fx-border-color: #ddd;" text="Reset" />
+                                                </children>
+                                            </HBox>
+                                            <HBox prefHeight="50.0" spacing="10.0">
+                                            	<children>
+                                                	<Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Buyer Name *" />
+                                                	<JFXTextField fx:id="buyerNmTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Buyer Name" styleClass="custom_textField" />
+                                                	<Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Address *" />
+                                                    <JFXTextField fx:id="addressTxtFld" prefHeight="37.0" prefWidth="354.0" promptText="Address" styleClass="custom_textField" />
+                                               	</children>
+                                            </HBox>
+                                          <HBox prefHeight="50.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Account Number" />
+                                                <JFXComboBox fx:id="cstmrAcntsCombox" prefHeight="37.0" prefWidth="393.0" styleClass="custom_grid_combobox" />
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Account Type" />
+                                                <JFXTextField fx:id="cstmrledrType" prefHeight="37.0" prefWidth="354.0" promptText="Account Type" styleClass="custom_textField" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="50.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Special Discount" />
+                                                <JFXTextField fx:id="acntSpclDiscnt" prefHeight="37.0" prefWidth="393.0" promptText="Special Discount" styleClass="custom_textField" />
+                                             </children>
+                                          </HBox>
+                                          <Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Delivery Detail " underline="true" />
+                                          <HBox prefHeight="50.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Delivery Medium" />
+                                                <JFXComboBox prefHeight="37.0" prefWidth="393.0" styleClass="custom_grid_combobox">
+                                                	 <items>
+                                                	 	<FXCollections fx:factory="observableArrayList">
+                                                	 		<String fx:value="SHOP" />
+                                                	 		<String fx:value="SUPPLY" />
+                                                	 	</FXCollections>
+                                                	 </items>
+                                                	 <value>
+                                                	 	<String fx:value="SHOP" />
+                                                	 </value>
+                                                </JFXComboBox>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Delivery Id" />
+                                                <JFXComboBox prefHeight="37.0" prefWidth="393.0" styleClass="custom_grid_combobox" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="50.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="37.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Delivery To" />
+                                                <JFXComboBox fx:id="deliveryToCombox" prefHeight="37.0" prefWidth="393.0" styleClass="custom_grid_combobox">
+                                                	 <items>
+                                                	 	<FXCollections fx:factory="observableArrayList">
+                                                	 		<String fx:value="Same State" />
+                                                	 		<String fx:value="Other State" />
+                                                	 	</FXCollections>
+                                                	 </items>
+                                                	 <value>
+                                                	 	<String fx:value="Same State" />
+                                                	 </value>
+                                                </JFXComboBox>
+                                             </children>
+                                          </HBox>
+                                       	</children>
+                              		</VBox>
+                                </content>
+                              </Tab>
+                              <Tab fx:id="selling_prdct_tab" text="Selling Products">
+                                 <content>
+                                    <VBox spacing="10.0" style="-fx-padding: 15px;" prefWidth="${headLineHBox.width-30}">
+                                       <children>
+                                          <Label prefHeight="33.0" prefWidth="175.0" styleClass="headlineLable" text="Choose Product to sell" underline="true" />
+                                          <HBox prefHeight="50.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;">
+                                             <children>
+                                                <JFXComboBox fx:id="groupCombox" prefHeight="37.0" prefWidth="370.0" promptText="Beverage Group Name" styleClass="custom_grid_combobox" />
+                                                <JFXComboBox fx:id="prdctComboBox" prefHeight="37.0" prefWidth="370.0" promptText="Beverage Product Name" styleClass="custom_grid_combobox" />
+                                                <JFXTextField fx:id="sellQtyTxtFldCs" prefHeight="37.0" prefWidth="104.0" promptText="Qty (C/s)" styleClass="custom_textField" />
+                                                <JFXTextField fx:id="sellQtyTxtFldBs" prefHeight="37.0" prefWidth="164.0" promptText="Qty (B/s)" styleClass="custom_textField" />
+                                                <JFXButton onAction="#addToSellTable" prefHeight="37.0" prefWidth="120.0" styleClass="custom_button" text="+ Add" />
+                                             </children>
+                                          </HBox>
+                                          <Label prefHeight="33.0" prefWidth="175.0" styleClass="headlineLable" text="Sale Product Table" underline="true" />
+                                          <ScrollPane prefViewportWidth="${headLineHBox.width-78.0}">
+                                             <content>
+                                                <VBox>
+                                                   <children>
+                                                      <TableView fx:id="sell_table" prefHeight="450.0">
+                                                        <columns>
+                                                          		<TableColumn fx:id="sr_col" prefWidth="43.0" text="Sr No" />
+                                                                <TableColumn fx:id="prdctGroup_col" prefWidth="310.0" text="Beverage Group" />
+                                                                <TableColumn fx:id="prdct_col" prefWidth="350.0" text="Product" />
+                                                            	<TableColumn fx:id="sale_Qty_Calculation_col" prefWidth="200.0" text="Qty Calculation" />
+                                                                <TableColumn fx:id="sellingPrdctGroupQty_col" prefWidth="75.0" text="Qty" />
+                                                                  <TableColumn fx:id="baseRatePrCs_col" prefWidth="73.0" text="Base Rate per c/s" />
+                                                                  <TableColumn fx:id="netBaseAmt_col" prefWidth="120.0" text="Net Base Amount" />
+                                                            	  <TableColumn fx:id="scheme_discnt_PerCs_col" prefWidth="70.0" text="Scheme/Discount per c/s" />
+                                                                  <TableColumn fx:id="scheme_discnt_col" prefWidth="100.0" text="Scheme/Discount Amt" />
+                                                                  <TableColumn fx:id="ttlTaxableAmt_col" prefWidth="120.0" text="Total Taxable Amount" />
+                                                                  <TableColumn  text="SGST">
+                                                                     <columns>
+                                                                        <TableColumn fx:id="sgstRate_col" prefWidth="50.0" text="Rate %" />
+                                                                        <TableColumn fx:id="sgstAmt_col" prefWidth="110.0" text="Amount" />
+                                                                     </columns>
+                                                                  </TableColumn>
+                                                                  <TableColumn  text="CGST">
+                                                                     <columns>
+                                                                        <TableColumn fx:id="cgstRate_col" prefWidth="50.0" text="Rate %" />
+                                                                        <TableColumn fx:id="cgstAmt_col" prefWidth="110.0" text="Amount" />
+                                                                     </columns>
+                                                                  </TableColumn>
+                                                            <TableColumn  text="IGST">
+                                                               <columns>
+                                                                  <TableColumn fx:id="igstRate_col" prefWidth="50.0" text="Rate %" />
+                                                                  <TableColumn fx:id="igstAmt_col" prefWidth="110.0" text="Amount" />
+                                                               </columns>
+                                                            </TableColumn>
+                                                            <TableColumn  text="CESS">
+                                                            	<columns>
+                                                                	<TableColumn fx:id="cessRate_col" prefWidth="50.0" text="Rate %" />
+                                                                    <TableColumn fx:id="cessAmt_col" prefWidth="110.0" text="Amount" />
+                                                                </columns>
+                                                            </TableColumn>
+                                                            <TableColumn fx:id="netRatePerCs_col" prefWidth="73.0" text="Net Rate Per Cs" />
+                                                            <TableColumn fx:id="netAmt_col" prefWidth="120.0" text="Sys Net Amount" />
+                                                            <TableColumn fx:id="sysSpclDiscnt_col" prefWidth="70.0" text="System Special Discount" />
+                                                            <TableColumn fx:id="discntAdjustment_col" prefWidth="70.0" text="Discount Adjustment" />
+                                                            <TableColumn fx:id="amtAdjustment_col" prefWidth="70.0" text="Amount Adjustment" />
+                                                            <TableColumn fx:id="grossPrdctAmt_col" prefWidth="120.0" text="Net Amount" />
+                                                        </columns>
+                                                      </TableView>
+                                                      <TableView fx:id="sum_table" prefHeight="40.0" styleClass="sum_table">
+                                                         <columns>
+                                                            <TableColumn prefWidth="43.0" text="Sr No" />
+                                                            <TableColumn fx:id="sum_totalText_col" prefWidth="310.0" text="Beverage Group" />
+                                                            <TableColumn prefWidth="350.0" text="Product" />
+                                                            <TableColumn prefWidth="200.0" text="Qty Calculation" />
+                                                            <TableColumn fx:id="sum_totalPrdctQty_col" prefWidth="75.0" text="Qty" />
+                                                            <TableColumn prefWidth="73.0" text="Base Rate per c/s" />
+                                                            <TableColumn fx:id="sum_totalBaseAmt_col" prefWidth="120.0" text="Net Base Amount" />
+                                                            <TableColumn prefWidth="70.0" text="Scheme/Discount per c/s" />
+                                                            <TableColumn fx:id="sum_schemeDiscnt_col" prefWidth="100.0" text="Scheme/Discount Amt" />
+                                                            <TableColumn prefWidth="120.0" text="Total Taxable Amount" />
+                                                            <TableColumn prefWidth="160.0" text="SGST" />
+                                                            <TableColumn prefWidth="160.0" text="CGST" />
+                                                            <TableColumn prefWidth="160.0" text="IGST" />
+                                                            <TableColumn prefWidth="160.0" text="CESS" />
+                                                            <TableColumn prefWidth="73.0" text="Net Rate Per Cs" />
+                                                            <TableColumn fx:id="sum_totalSysNetAmt_col" prefWidth="120.0" text="Sys Net Amount" />
+                                                            <TableColumn fx:id="sum_sysSpclDisnt_col" prefWidth="70.0" text="System Special Discount" />
+                                                            <TableColumn fx:id="sum_disntAdjustmnt_col" prefWidth="70.0" text="Discount Adjustment" />
+                                                            <TableColumn fx:id="sum_amtAdjustment_col" prefWidth="70.0" text="Amount Adjustment" />
+                                                            <TableColumn fx:id="sum_totalNetAmt_col" prefWidth="120.0" text="Net Amount" />
+                                                         </columns>
+                                                         </TableView>
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="schemeTab" text="Schemes">
+                                <content>
+                                	<VBox alignment="TOP_LEFT" spacing="10.0" prefWidth="${headLineHBox.width-30}">
+                                    	<children>
+                                          <HBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                             <children>
+                                              	<Label prefHeight="40.0" prefWidth="155.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Schemes Details" underline="true" />
+                                             </children>
+                                          </HBox>
+                                    		<SplitPane dividerPositions="0.32" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      											<items>
+                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                   <children>
+                                                      <HBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="40.0" prefWidth="146.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Choose Scheme" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="TOP_CENTER" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <JFXToggleButton text="Previous" unToggleColor="#267bd7" unToggleLineColor="#267bd7" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="39.0" prefWidth="131.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Scheme Given For" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="50.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Beverage Group *" />
+                                                            <JFXComboBox fx:id="schemeForPrdctGroupCombox" prefHeight="37.0" prefWidth="290.0" styleClass="custom_grid_combobox" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="50.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Beverage Product" />
+                                                            <JFXComboBox fx:id="schemeForPrdctCombox" prefHeight="37.0" prefWidth="290.0" styleClass="custom_grid_combobox" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="39.0" prefWidth="131.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Scheme Product" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="50.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Beverage Product *" />
+                                                            <JFXComboBox fx:id="schemePrdctCombox" prefHeight="37.0" prefWidth="290.0" styleClass="custom_grid_combobox" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="50.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Qty *" />
+                                                            <JFXTextField fx:id="schemeQtyTxtFld" prefHeight="37.0" prefWidth="290.0" promptText="B/s" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="40.0">
+               											<children>
+                  											<JFXButton onAction="#addSchemeToTable" prefHeight="40.0" prefWidth="250.0" styleClass="custom_button" text="+ Add Scheme" />
+               											</children>
+            										  </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="546.0">
+                                                   <children>
+                                                      <HBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="40.0" prefWidth="155.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Schemes Table" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                      <ScrollPane>
+                                                         <content>
+                                                            <HBox style="-fx-padding: 0 0 0 10px;">
+                                                               <children>
+                                                                    <TableView fx:id="schemeTable">
+                                                                    	<columns>
+                                                                        	<TableColumn fx:id="scheme_sr_col" prefWidth="56.0" text="Sr No" />
+                                                                            <TableColumn prefWidth="297.0" text="Scheme Given For">
+                                                                           <columns>
+                                                                              <TableColumn fx:id="SchemeForGrp_col" prefWidth="300.0" text="Beverage Group" />
+                                                                                  <TableColumn fx:id="schemeForPrdct_col" prefWidth="300.0" text="Beverage Product" />
+                                                                           </columns>
+                                                                        </TableColumn>
+                                                                        	<TableColumn fx:id="schemePrdct_col" prefWidth="300.0" text="Scheme Beverage Product" />
+                                                                            <TableColumn fx:id="qty_col" prefWidth="75.0" text="Qty(B/s)" />
+                                                                      </columns>
+                                                                	</TableView>
+                                                               </children>
+                                                            </HBox>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </children>
+                                                </VBox>
+      											</items>
+      										</SplitPane>
+                                   		</children>
+                                 	</VBox>
+                                </content>
+                              </Tab>
+                              <Tab text="Brekage Detail">
+                                 <content>
+                                    <VBox alignment="TOP_LEFT" spacing="10.0" prefWidth="${headLineHBox.width-30}">
+                                       <children>
+                                          <HBox fillHeight="false" spacing="150.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                             <children>
+                                                <Label prefHeight="40.0" prefWidth="166.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Breakage Deatails" underline="true" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                             <children>
+                                                <VBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0 1px 0 0;">
+                                                   <children>
+                                                      <HBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="40.0" prefWidth="221.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Choose Breakage Product" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="696.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Beverage Product **" />
+                                                            <JFXComboBox fx:id="breakagePrdctCombox" prefHeight="37.0" prefWidth="290.0" styleClass="custom_grid_combobox" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="52.0" prefWidth="696.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="157.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Qty **" />
+                                                            <JFXTextField fx:id="breakageQtyTxtFld" prefHeight="37.0" prefWidth="290.0" promptText="B/s" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" prefWidth="696.0" />
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="55.0">
+                                                         <children>
+                                                            <JFXButton buttonType="RAISED" onAction="#addBreakageToTable" prefHeight="42.0" prefWidth="206.0" styleClass="custom_button" text="+ Add Breakage" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox>
+                                                   <children>
+                                                      <HBox style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="55.0" prefWidth="146.0" style="-fx-text-fill: Green; -fx-font-size: 16px; -fx-padding: 15px;" text="Breakage Table" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                      <TableView fx:id="brekageTable">
+                                                         <columns>
+                                                            <TableColumn fx:id="brekage_Prdct_col" prefWidth="350.0" text="Beverage Product" />
+                                                            <TableColumn fx:id="breakage_qty_col" prefWidth="100.0" text="Qty" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="payment_tab" text="Payment Detail">
+                                 <content>
+                                    <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 15px;" prefWidth="${headLineHBox.width-30}">
+                                       <children>
+                                          <HBox alignment="TOP_CENTER" spacing="15.0">
+                                             <children>
+                                                <VBox style="-fx-padding: 10px; -fx-border-color: #E0E0E0; -fx-border-width: 0px 1px 0px 0px;">
+                                                   <children>
+                                                      <Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Payment" underline="true" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="40.0" prefWidth="193.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="System Generated Amounts" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Net Amount" />
+                                                            <JFXTextField fx:id="saleTtlSysGeneratedAmtTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Net Amount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Scheme Discount" />
+                                                            <JFXTextField fx:id="saleTtlSchemeDiscountTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Sheme Discount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="27.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Special Discount" />
+                                                            <JFXTextField fx:id="saleTtlSpecialDiscountTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Special Discount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total" />
+                                                            <JFXTextField fx:id="netAmtSchemeSpecialTotalTextFld" prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="39.0" prefWidth="81.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Adjustment" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Amount Adjustment" />
+                                                            <JFXTextField fx:id="adjustmentAmtTotalTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Adjustment Amount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Adjustment Discount" />
+                                                            <JFXTextField fx:id="adjustmentDiscntTotalTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Adjustment Discount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Gross Amount" />
+                                                            <JFXTextField fx:id="totalGrossAmtTextFld" prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Previous " />
+                                                            <JFXTextField fx:id="previousAmt" prefHeight="37.0" prefWidth="393.0" promptText="Previous" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Payable Amount" />
+                                                            <JFXTextField fx:id="payableAmtTextFld" prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Amount Paid *" />
+                                                            <JFXTextField fx:id="paidAmtTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Paid Amount" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Balance" />
+                                                            <JFXTextField fx:id="balanceTextFld" prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox style="-fx-padding: 10px;">
+                                                   <children>
+                                                      <Label prefHeight="33.0" prefWidth="133.0" styleClass="headlineLable" text="Other" underline="true" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="39.0" prefWidth="85.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Empty Glass" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Glass *" />
+                                                            <JFXTextField fx:id="givenGlassTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Total Glass" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Previous Glass" />
+                                                            <JFXTextField prefHeight="37.0" prefWidth="393.0" promptText="Previous Glass" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total" />
+                                                            <JFXTextField prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="52.0">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Return Glass *" />
+                                                            <JFXTextField fx:id="returnGlassTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Return Glass " styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Balance Empty" />
+                                                            <JFXTextField prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="39.0" prefWidth="37.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Cell" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Extra Given Cell" />
+                                                            <JFXTextField fx:id="extraGivenCellTextFld" prefHeight="37.0" prefWidth="393.0" styleClass="custom_textField" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" />
+                                                      <HBox alignment="CENTER_RIGHT" prefHeight="158.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1px 0px 1px 0px;">
+                                                         <children>
+                                                            <JFXButton buttonType="RAISED" onAction="#sellProduct" prefHeight="45.0" prefWidth="236.0" styleClass="custom_button" text="Sell Product" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </JFXTabPane>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

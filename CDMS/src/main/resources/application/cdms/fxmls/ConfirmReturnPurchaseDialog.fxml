@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.102">
+<children>
+	<HBox alignment="BOTTOM_LEFT" prefHeight="25.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                   	<children>
+                       	<Label prefHeight="25.0" prefWidth="133.0" styleClass="headlineLable" text="Company Detail" underline="true" />
+                   	</children>
+                </HBox>
+                <HBox prefHeight="60.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Company Name: " />
+               			<JFXTextField fx:id="dilogFirmName" accessibleText="dilogFirmName" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Company Name" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Invoice Number" />
+                        <JFXTextField fx:id="dilogInvoiceNum" accessibleText="dilogInvoiceNum" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Invoice Number" styleClass="custom_textField" />
+                    </children>
+               	</HBox>
+               	<HBox alignment="BOTTOM_LEFT" prefHeight="25.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;">
+                   	<children>
+                       	<Label prefHeight="25.0" prefWidth="133.0" styleClass="headlineLable" text="Return Product" underline="true" />
+                   	</children>
+                </HBox>
+               	<HBox prefHeight="60.0" spacing="10.0">
+                	<children>
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Load" />
+               			<JFXTextField fx:id="dilogTotalLoad" accessibleText="dilogTotalLoad" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Load" styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Amount" />
+                        <JFXTextField fx:id="dilogTotalAmt" accessibleText="dilogTotalAmt" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Amount" styleClass="custom_textField" />
+                    </children>
+    </HBox>
+    </children>
+</VBox>

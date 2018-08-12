@@ -394,7 +394,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		productDilogu.setOverlayClose(true);
+		productDilogu.setOverlayClose(false);
 		productDilogu.show();
 		System.out.println(productDilogu.computeAreaInScreen());
 	}
@@ -441,6 +441,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		JFXButton confirmButton = new JFXButton("Confirm");
 		JFXButton cancelButton = new JFXButton("edit");
 		JFXButton printInvoiceButton = new JFXButton("print");
+		JFXButton closeButton = new JFXButton("close");
 		printInvoiceButton.setVisible(false);
 		confirmButton.setOnAction( (e)->{
 			cancelButton.setDisable(true);
@@ -460,11 +461,16 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		cancelButton.setOnAction((e)->{
 			productDilogu.close();
 		});
+		closeButton.setOnAction((e)->{
+			productDilogu.close();
+		});
 		
 		
 		confirmButton.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-pref-width:111.0;");
 		cancelButton.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;fx-pref-width:111.0;");
-		HBox hbox = new HBox(cancelButton,confirmButton,printInvoiceButton);
+		printInvoiceButton.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;fx-pref-width:111.0;");
+		closeButton.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;fx-pref-width:111.0;");
+		HBox hbox = new HBox(cancelButton,confirmButton,printInvoiceButton,closeButton);
 		hbox.setAlignment(Pos.CENTER);
 		hbox.prefHeight(30);
 		hbox.setSpacing(10);
@@ -516,7 +522,8 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		jasperParams.put("totalDiscount", 0);
 		jasperParams.put("totalTaxableAmt", totalTaxableAmt.get());
 		jasperParams.put("totalCGSTAmt", totalCGSTAmt.get());
-		jasperParams.put("totalSGSTAmt", totalCGSTAmt.get());
+		jasperParams.put("totalSGSTAmt", totalSGSTAmt.get());
+		jasperParams.put("totalIGSTAmt", totalIGSTAmt.get());
 		jasperParams.put("totalCessAmt", totalCessAmt.get());
 		jasperParams.put("netAmt", netAmt.get());
 		saleLst.add(sale);

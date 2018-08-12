@@ -72,6 +72,7 @@ public class AddNewCstmrcontroller implements Initializable, ScreenController {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		logger.info("Initialize");
 		cstmrTerritory.setItems(masterService.getAllTerritory());
 	}
 	

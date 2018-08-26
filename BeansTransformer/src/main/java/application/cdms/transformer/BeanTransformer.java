@@ -849,7 +849,7 @@ public class BeanTransformer {
 		nbSaleEntity.setAddress(nbSale.getAddress());
 		nbSaleEntity.setCstmrFrmNm(nbSale.getCstmrFrmNm());
 		nbSaleEntity.setCstmrAcntNo(nbSale.getCstmrAcntNo());
-		nbSaleEntity.setInvoiceType(nbSale.getInvoiceType());
+		nbSaleEntity.setInvoiceType(nbSale.getInvoiceType().getType());
 		nbSaleEntity.setCstmrFirmGstn(nbSale.getBuyerGstn());
 		String saleDt = nbSale.getNbSaleDt();
     	Calendar calendar = Calendar.getInstance();

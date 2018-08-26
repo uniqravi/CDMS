@@ -17,7 +17,7 @@ import application.cdms.component.data.handler.CellFactoryGenerator;
 import application.cdms.component.data.handler.CheckerForTextField;
 import application.cdms.component.data.handler.CustomeStringConverter;
 import application.cdms.component.data.handler.ErrorDialog;
-import application.cdms.models.PaymentMethod;
+import application.cdms.enums.PaymentMethod;
 import application.cdms.models.PurchaseDtls;
 import application.cdms.service.ProductService;
 import application.cdms.service.impl.ProductServiceImpl;

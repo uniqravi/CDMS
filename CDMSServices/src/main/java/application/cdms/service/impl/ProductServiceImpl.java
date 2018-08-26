@@ -11,6 +11,8 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -1073,11 +1075,13 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 		logger.info("viewPurchaseTaxByDt :: End");
 		return texCompntOfInvoice;
  	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ObservableList<NonBeveragePrdct> nonBproductList() {
 		logger.info("ProductServiceImpl :: nonBproductList :: begin");
-		HibernateUtils.getCustomeTrasationManager().initTx();
-		List<NonBeverageProductCatergory> NonBProductCateList = this.findAllEntity(NonBeverageProductCatergory.class);
+		Criteria ct = HibernateUtils.getCustomeTrasationManager().initTx().createCriteria(NonBeverageProductCatergory.class);
+		ct.addOrder(Order.asc("productNm"));
+		List<NonBeverageProductCatergory> NonBProductCateList = ct.list();
 		ObservableList<NonBeveragePrdct> productList = FXCollections.observableArrayList();
 		for (NonBeverageProductCatergory Nonbeverage : NonBProductCateList) {
 			productList.add(BeanTransformer.getNonBeverageProductBean(Nonbeverage));
@@ -1119,5 +1123,43 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 		logger.info("ProductServiceImpl :: updateRtnPurchaseInvoiceNumber :: db Activity Start");
 		productDao.updateRtnEmtpyInvoiceNumber(challanNumber,purchaseInvoiceNo,nbSaleInvoiceNum);
 		HibernateUtils.commitCloseCustomeTransationManager();
+	}
+	
+	public List<PurchaseDtls> getAllChallanDtlsForForRtnEmpty(Initialization mode){
+		logger.info("getAllChallanDtlsForForRtnEmpty :: begin");
+		List<PurchaseDtls> purchaseDtlsList=null;
+			try{
+				Criteria criteria=HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
+				Criterion cn1=Restrictions.isNull("rtnEmptyInvoiceNo");
+				Map<String,Object> propNmVals = new HashMap<>();
+				propNmVals.put("returningBottleQty",0L);
+				propNmVals.put("returningCellQty",0L);
+				Criterion cn2 = Restrictions.allEq(propNmVals);
+				LogicalExpression lgExp = Restrictions.and(cn1, cn2);
+				criteria.add(lgExp);
+				criteria.addOrder(Order.desc("challanDt"));
+				criteria.setMaxResults(5);
+				@SuppressWarnings("unchecked")
+				List<PurchaseDtl> purchaseEntityList=criteria.list();
+				if(purchaseEntityList!=null && purchaseEntityList.size()>0){
+					purchaseDtlsList = new ArrayList<>();
+					logger.info("getAllChallanDtlsForForRtnEmpty :: starting to get PurchaseDtl bean");
+					for(PurchaseDtl purchaseDtlEntity:purchaseEntityList){
+						PurchaseDtls purchaseDtlsBean=BeanTransformer.getPurchaseBean(purchaseDtlEntity,mode);
+						purchaseDtlsList.add(purchaseDtlsBean);
+					}
+					logger.info("getAllChallanDtlsForForRtnEmpty :: End to get PurchaseDtl bean");
+				}
+				HibernateUtils.getCustomeTrasationManager().commitTx();
+			}
+			catch(Exception e){
+				logger.fatal("Error while fetching purchase list");
+				e.printStackTrace();
+			}
+			finally{
+				HibernateUtils.CloseCustomeTransationManager();
+			}
+		logger.info("getAllChallanDtlsForForRtnEmpty :: End");
+		return purchaseDtlsList;
 	}
 }

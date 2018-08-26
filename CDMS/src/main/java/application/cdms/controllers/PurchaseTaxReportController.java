@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import application.cdms.component.data.handler.CellFactoryGenerator;
 import application.cdms.component.data.handler.CustomeStringConverter;
 import application.cdms.constants.ApplicationConstant;
+import application.cdms.fx.ui.components.ReportButton;
 import application.cdms.models.SearchBean;
 import application.cdms.service.CDMSDataProviderService;
 import javafx.beans.property.SimpleStringProperty;
@@ -52,6 +53,9 @@ public class PurchaseTaxReportController implements Initializable, ScreenControl
 	
 	@FXML
     private TableView<String[]> purchaseTaxDtlsTbl;
+    
+    @FXML
+    private ReportButton reportButton;
     
     //private ProductService productService = ProductServiceImpl.getInstance();
     private CDMSDataProviderService dataProvider= CDMSDataProviderService.createCDMSDataProvider();
@@ -116,6 +120,9 @@ public class PurchaseTaxReportController implements Initializable, ScreenControl
         		else{
         			billSummeryLt=dataProvider.viewPurchaseTaxByDt(fromDt,toDt);
         		}
+        		
+        		reportButton.setElValuesMap("fromMonthYear", ApplicationConstant.monthYearFormatter.format((ApplicationConstant.dateformatter.parse(fromDt))));
+        		reportButton.setElValuesMap("toMonthYear", ApplicationConstant.monthYearFormatter.format((ApplicationConstant.dateformatter.parse(toDt))));
                 return billSummeryLt;
 			}
 		};

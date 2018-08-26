@@ -1,5 +1,7 @@
 package application.cdms.models;
 
+import application.cdms.utilities.Utility;
+
 public class PurchaseProductDtl {
 	//private Product product;
 	private ProductCatagory product;
@@ -122,5 +124,21 @@ public class PurchaseProductDtl {
 	}
 	public void setMrp(Double mrp) {
 		this.mrp = mrp;
+	}
+	public void refreshPrice() {
+		HsnTax hsn=this.product.getHsnTax();
+		this.totalBaseAmt 	= 	Utility.decimalRound(this.unitPrice*this.product_qty);
+		this.netTaxableAmt 	= 	Utility.decimalRound(this.totalBaseAmt-this.discountAmt);
+		if(this.totalPrdctCGSTAmt!=0.0) {
+			this.totalPrdctCGSTAmt=Utility.decimalRound(hsn.getCgst()*this.netTaxableAmt);
+		}
+		if(this.totalPrdctSGSTAmt!=0.0) {
+			this.totalPrdctSGSTAmt = Utility.decimalRound(hsn.getSgstOrIgst()*this.netTaxableAmt);
+		}
+		if(this.totalPrdctIGSTAmt!=0.0){
+			this.totalPrdctIGSTAmt = Utility.decimalRound(hsn.getIgst()*this.netTaxableAmt);
+		}
+		this.totalPrdctCessAmt = hsn.getCess()*this.netTaxableAmt;
+		this.netPrdctAmnt = Utility.decimalRound(this.netTaxableAmt+this.totalPrdctCGSTAmt+this.totalPrdctSGSTAmt+this.totalPrdctIGSTAmt+this.totalPrdctCessAmt);
 	}
 }

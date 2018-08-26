@@ -88,7 +88,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="78.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #E0E0E0;">
                                        <children>
-                                          <JFXTextField fx:id="priceTextFld" alignment="BOTTOM_CENTER" labelFloat="true" prefHeight="41.0" prefWidth="353.0" promptText="Price" styleClass="custom_textField" />
+                                          <JFXTextField fx:id="priceTextFld" alignment="BOTTOM_CENTER" labelFloat="true" prefHeight="41.0" prefWidth="353.0" promptText="Price (&#x20b9;)" styleClass="custom_textField" />
                                        </children>
                                     </HBox>
                                     <HBox alignment="TOP_CENTER" prefHeight="64.0" spacing="2.0" style="-fx-border-width: 1.0px 0px 0px 0px; -fx-border-color: #E0E0E0;">

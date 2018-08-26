@@ -25,39 +25,39 @@
                 </HBox>
                 <HBox prefHeight="60.0" spacing="10.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;;">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Base Amount" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Base Amount &#x20b9;" />
                			<JFXTextField accessibleText="dilogTtlBaseAmount" prefHeight="46.0" prefWidth="366.0" promptText="Total Base Amount" styleClass="custom_textField" />
-                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Discount" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Discount &#x20b9;" />
                         <JFXTextField accessibleText="dilogDiscount" prefHeight="46.0" prefWidth="366.0" promptText="Discount" styleClass="custom_textField" />
                     </children>
                	</HBox>
                	<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Taxable Amount" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Taxable Amount &#x20b9;" />
                			<JFXTextField accessibleText="dilogTaxableAmnt" prefHeight="46.0" prefWidth="366.0" promptText="Taxable Amount" styleClass="custom_textField" />
-                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="CGST Amount" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="CGST Amount &#x20b9;" />
                         <JFXTextField accessibleText="dilogcsgt" prefHeight="46.0" prefWidth="366.0" promptText="CGST Amount" styleClass="custom_textField" />
                     </children>
                	</HBox>
                	<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="SGST Amount" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="SGST Amount &#x20b9;" />
                			<JFXTextField accessibleText="dilogSgst" prefHeight="46.0" prefWidth="366.0" promptText="SGST Amount" styleClass="custom_textField" />
-                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Cess Amount" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Cess Amount &#x20b9;" />
                         <JFXTextField accessibleText="dilogCess" prefHeight="46.0" prefWidth="366.0" promptText="Cess Amount" styleClass="custom_textField" />
                     </children>
                	</HBox>
                	<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="IGST Amount" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="IGST Amount &#x20b9;" />
                			<JFXTextField accessibleText="dilogIgst" prefHeight="46.0" prefWidth="366.0" promptText="IGST Amount" styleClass="custom_textField" />
-                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Gross Amount" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Gross Amount &#x20b9;" />
                         <JFXTextField accessibleText="dilogGrossAmnt" prefHeight="46.0" prefWidth="366.0" promptText="Gross Amount" styleClass="custom_textField" />
                     </children>
                	</HBox>
                	<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="MRP" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="MRP &#x20b9;" />
                			<JFXTextField accessibleText="dilogMrp" prefHeight="46.0" promptText="MRP " styleClass="custom_textField" />
                     </children>
                	</HBox>

@@ -148,19 +148,19 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Gross Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Gross Amount : &#x20b9;" />
                                                       <JFXTextField id="challanAmount" editable="false" prefHeight="46.0" prefWidth="198.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Discount Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Discount Amount : &#x20b9;" />
                                                       <JFXTextField id="totalDiscount" editable="false" prefHeight="46.0" prefWidth="198.0" style="-fx-font-size: 16px;" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Paid Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Paid Amount : &#x20b9;" />
                                                       <JFXTextField id="paidAmount" prefHeight="46.0" prefWidth="198.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
                                                    </children>
                                                 </HBox>

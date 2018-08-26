@@ -51,4 +51,5 @@ public interface ProductService {
    ObservableList<NonBeveragePrdct> nonBproductList();
    NonBeverageSale returnEmptyInvoice(NonBeverageSale sale) throws Exception;
    void updateRtnEmtpyInvoiceNumber(String challanNumber, String purchaseInvoiceNo, String nbSaleInvoiceNum)throws Exception;
+   public List<PurchaseDtls> getAllChallanDtlsForForRtnEmpty(Initialization mode);
 }

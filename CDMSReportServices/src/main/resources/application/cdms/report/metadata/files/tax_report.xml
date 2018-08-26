@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xlsReportMetaDataDtl xlsWorkSheetNm="{currentMonth}-{currentYear}" inputSourcetype="fxTableViewType" exportfileNm="D:\\Tax-Report" 
+<xlsReportMetaDataDtl xlsWorkSheetNm="${fromMonthYear}-${toMonthYear}" inputSourcetype="fxTableViewType" exportfileNm="D:\\Tax-Report" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns="http://www.example.org/reportMetadata"  
 xsi:schemaLocation="http://www.example.org/reportMetadata xlsReportMetadata.xsd">

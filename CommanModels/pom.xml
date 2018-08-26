@@ -12,6 +12,13 @@
   <properties>
   	<jdk-version>1.8</jdk-version>
   </properties>
+  <dependencies>
+  <dependency>
+  		<groupId>cdms</groupId>
+  		<artifactId>CDMSConfig</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
   <build>
   <!-- 
   	<plugins>

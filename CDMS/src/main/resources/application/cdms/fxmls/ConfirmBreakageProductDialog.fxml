@@ -28,17 +28,17 @@
                	<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
                			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Glasses" />
-               			<JFXTextField fx:id="dilogTotalGlass" accessibleText="dilogToalGlass" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Load" styleClass="custom_textField" />
+               			<JFXTextField fx:id="dilogTotalGlass" accessibleText="dilogToalGlass" editable="false" prefHeight="46.0" prefWidth="366.0"  styleClass="custom_textField" />
                         <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Cells" />
-                        <JFXTextField fx:id="dilogTotalCell" accessibleText="dilogTotalCell" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Amount" styleClass="custom_textField" />
+                        <JFXTextField fx:id="dilogTotalCell" accessibleText="dilogTotalCell" editable="false" prefHeight="46.0" prefWidth="366.0" styleClass="custom_textField" />
                     </children>
     			</HBox>
     			<HBox prefHeight="60.0" spacing="10.0">
                 	<children>
-               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Taxable Amount" />
-               			<JFXTextField fx:id="dilogTotalTaxableAmt" accessibleText="dilogTotalTaxableAmt" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Load" styleClass="custom_textField" />
-                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Amount" />
-                        <JFXTextField fx:id="dialogTotalNetAmt" accessibleText="dialogTotalNetAmt" editable="false" prefHeight="46.0" prefWidth="366.0" promptText="Total Amount" styleClass="custom_textField" />
+               			<Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Taxable Amount &#x20b9;" />
+               			<JFXTextField fx:id="dilogTotalTaxableAmt" accessibleText="dilogTotalTaxableAmt" editable="false" prefHeight="46.0" prefWidth="366.0"  styleClass="custom_textField" />
+                        <Label prefHeight="46.0" prefWidth="161.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Total Amount &#x20b9;" />
+                        <JFXTextField fx:id="dialogTotalNetAmt" accessibleText="dialogTotalNetAmt" editable="false" prefHeight="46.0" prefWidth="366.0" styleClass="custom_textField" />
                     </children>
     			</HBox>
     </children>

@@ -109,6 +109,8 @@ public class PurchaseDtl implements Serializable {
 	@Column(name="return_invoice_no")
 	private String returnInvoiceNo;
 	
+	@Column(name="return_empty_invoice_no")
+	private String rtnEmptyInvoiceNo;
 
 	public PurchaseDtl() {
 	}
@@ -295,5 +297,13 @@ public class PurchaseDtl implements Serializable {
 
 	public void setReturningCellQty(long returningCellQty) {
 		this.returningCellQty = returningCellQty;
+	}
+
+	public String getRtnEmptyInvoiceNo() {
+		return rtnEmptyInvoiceNo;
+	}
+
+	public void setRtnEmptyInvoiceNo(String rtnEmptyInvoiceNo) {
+		this.rtnEmptyInvoiceNo = rtnEmptyInvoiceNo;
 	}
 }

@@ -72,8 +72,12 @@ public interface CDMSDataProviderService {
 	@DaoQuery(queryString="select nb.non_bev_product_cd,nb.product_name,pnb.unit_price,hsn.* from cdms.purchase_non_beverage_prdct_dtl pnb "
 			+ "inner join cdms.non_beverage_product_category nb on  pnb.non_bev_product_cd=nb.non_bev_product_cd "
 			+ "inner join cdms.hsn_tax_structure hsn on nb.hsn_code=hsn.hsn_cd "
-			+ "where pnb.purchase_seq_no=(select p.purchase_seq_no from cdms.purchase_dtl p where p.challan_invoice_no=?);")
+			+ "where pnb.purchase_seq_no=(select p.purchase_seq_no from cdms.purchase_dtl p where p.challan_invoice_no=?)")
 	ObservableList<String[]> viewNonBeveragePurchaseDtlByInvoice(Object... values);
+	
+	@DaoQuery(queryString="select nb.non_bev_product_cd,nb.product_name,npb.unit_price from cdms.non_beverage_product_category as nb " + 
+			"left join cdms.purchase_non_beverage_prdct_dtl as npb on nb.non_bev_product_cd=npb.non_bev_product_cd order by prdct_recieved_dt desc",limit=2)
+	ObservableList<String[]> getNonBeveragePrdctsPrice();
 
 	static class CDMSDataIntanceProvider {
 		private static CDMSDataProviderService instance = (CDMSDataProviderService) Proxy.newProxyInstance(
@@ -110,17 +114,18 @@ public interface CDMSDataProviderService {
 				sb.append("]");
 				DaoQuery daoQuery = method.getAnnotation(DaoQuery.class);
 				String queryId = daoQuery.queryString();
+				int limit=daoQuery.limit();
 				Class<?> returnClassType = method.getReturnType();
 				if (returnClassType.getName().equalsIgnoreCase("javafx.collections.ObservableList")) {
 					CDMSDataProviderDao cdmsDataProvider = CDMSDataProviderDaoImpl.getInstance();
-					List<Object[]> list = cdmsDataProvider.getCDMSDataList(sb.toString(), queryId, objArray);
+					List<Object[]> list = cdmsDataProvider.getCDMSDataList(sb.toString(), queryId,limit, objArray);
 					@SuppressWarnings("rawtypes")
 					ObservableList returnLst = FXCollections.observableArrayList();
 					if (list != null && !list.isEmpty())
 						for (Object[] objArry : list) {
 							String[] strArry = new String[objArry.length];
 							for (int j = 0; j < objArry.length; j++) {
-								strArry[j] = objArry[j].toString();
+								strArry[j] = objArry[j]!=null?objArry[j].toString():null;
 							}
 							returnLst.add(strArry);
 						}

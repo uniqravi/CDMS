@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -19,8 +20,10 @@ import com.jfoenix.controls.JFXTextField;
 
 import application.Components;
 import application.SystemMessages;
+import application.ValidationRegex;
 import application.cdms.component.data.handler.AlertDialog;
 import application.cdms.component.data.handler.CellFactoryGenerator;
+import application.cdms.component.data.handler.DialogueCreator;
 import application.cdms.component.data.handler.ErrorDialog;
 import application.cdms.component.data.handler.PrintJobScreen;
 import application.cdms.constants.ApplicationConstant;
@@ -60,6 +63,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -158,7 +162,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 	}
 
 	private void afterPageLoadingAction() {
-		challanSummeryLstTable.getItems().addAll(productService.getAllChallanDetail(Initialization.LAZY));
+		challanSummeryLstTable.getItems().addAll(productService.getAllChallanDtlsForForRtnEmpty(Initialization.LAZY));
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -333,7 +337,12 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 				}	
 			}
 		}
+		else {
+			showNonBevPriceDialog(purchaseDtls);
+		}
 	}
+	
+	
 	
 	@FXML
 	void gnrtRtrnPrchseInvoice(ActionEvent event){
@@ -463,6 +472,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		});
 		closeButton.setOnAction((e)->{
 			productDilogu.close();
+			t.loadScreenIntoRoot(Components.HOMESCREEN, Components.HOMESCREEN_FXML, null);
 		});
 		
 		
@@ -536,4 +546,157 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 			e.printStackTrace();
 		}
 	}
+	
+	private void showNonBevPriceDialog(PurchaseDtls purchaseDtls) {
+		JFXDialog productDilogu=null;
+		JFXDialogLayout dilogLayout = new JFXDialogLayout();
+		Label heading = new Label("Set Non Beverage Products Price :");
+		heading.setStyle("-fx-font-size: 22px;-fx-text-fill:#3F51B5");
+		dilogLayout.setHeading(heading);
+		productDilogu = new JFXDialog(((StackPane) t.getCurrentNode()), dilogLayout, DialogTransition.CENTER);
+		dilogLayout.setBody(bodyforNonBevDefaultPriceSet(productDilogu,purchaseDtls));
+		productDilogu.setOverlayClose(false);
+		productDilogu.show();
+	}
+
+
+	private Pane bodyforNonBevDefaultPriceSet(JFXDialog productDilogu,PurchaseDtls purchaseDtls) {
+		ObservableList<NonBeveragePrdct> nonBProduct = productService.nonBproductList();
+		
+		//row : 0;
+		Label warningHeader = new Label("There are no purchased glassess.So Please input unit Price"); 
+		warningHeader.setStyle("-fx-text-fill: purple; -fx-font-size: 15px;-fx-pref-height:24.0;-fx-pref-width:408.0;-fx-alignment: CENTER;");
+		
+		//row : 1
+		Label bottleUnitPriceLabel = new Label("Bottle Unit Price"); 
+		bottleUnitPriceLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:160.0;-fx-alignment: CENTER_RIGHT;");
+		
+		Label bottleRsSymbol = new Label("₹"); 
+		bottleRsSymbol.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:83.0;-fx-alignment: CENTER_RIGHT;");
+		
+		TextField bottleUnitPriceFld = new JFXTextField();
+		bottleUnitPriceFld.setStyle("-fx-pref-height:34.0;-fx-font-size: 14px;");
+		
+		//row	: 2
+		Label shellUnitPriceLabel = new Label("Bottle Unit Price"); 
+		shellUnitPriceLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:160.0;-fx-alignment: CENTER_RIGHT;");
+		
+		Label shellRsSymbol = new Label("₹"); 
+		shellRsSymbol.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:83.0;-fx-alignment: CENTER_RIGHT;");
+		
+		TextField shellUnitPriceFld = new JFXTextField();
+		shellUnitPriceFld.setStyle("-fx-pref-height:34.0;-fx-font-size: 14px;");
+		
+		//row : 3
+		JFXButton setPriceBtn = new JFXButton("Set Price");
+		setPriceBtn.setButtonType(ButtonType.RAISED);
+		setPriceBtn.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-pref-height:29.0;-fx-pref-width:181.0;");
+		
+		JFXButton cancelBtn = new JFXButton("Cancel");
+		cancelBtn.setButtonType(ButtonType.RAISED);
+		cancelBtn.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-pref-height:29.0;-fx-pref-width:201.0;");
+		
+		
+		setPriceBtn.setOnAction( (e) ->{
+			StringBuilder strbuild = new StringBuilder();
+			boolean isError = false;
+			String bottleUnitPriceStr = bottleUnitPriceFld.getText();
+			String shellUnitPriceStr  = shellUnitPriceFld.getText();
+			if(bottleUnitPriceStr==null || bottleUnitPriceStr.trim().equals("") || !bottleUnitPriceStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
+				strbuild.append("Please provide valid bottle Unit Price");
+				isError=true;
+			}
+			if(shellUnitPriceStr==null || shellUnitPriceStr.trim().equals("") 
+					|| !shellUnitPriceStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
+				strbuild.append("Please provide valid shell Unit Price");
+				isError=true;
+			}
+			else if(Double.parseDouble(shellUnitPriceStr)==0.0) {
+				strbuild.append("Please provide valid shell Unit Price");
+				isError=true;
+			}
+			if(isError){
+				ErrorDialog.showErrorDilogue(new Text(strbuild.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
+				return;
+			}
+			for(NonBeveragePrdct nb:nonBProduct) {
+				if(ApplicationConstant.BOTTLE.equals(nb.getProductNm())) {
+					createNonBSale(nb,purchaseDtls, bottleUnitPriceStr);
+				}
+				else if(ApplicationConstant.SHELL.equals(nb.getProductNm())) {
+					createNonBSale(nb,purchaseDtls, bottleUnitPriceStr);
+				}
+			}
+			returnEmptyTable.refresh();
+			productDilogu.close();
+		});
+		
+		cancelBtn.setOnAction( (e) ->{
+			productDilogu.close();
+		});
+		
+		Object[][] nodDtls = new Object[][]{
+				{warningHeader,0,0,0,3},
+				{bottleUnitPriceLabel,1,0,0,0},
+				{bottleRsSymbol,1,1,0,0},
+				{bottleUnitPriceFld,1,2,0,0},
+				{shellUnitPriceLabel,2,0,0,0},
+				{shellRsSymbol,2,1,0,0},
+				{shellUnitPriceFld,2,2,0,0},
+				{setPriceBtn,3,0,0,3},
+				{cancelBtn,3,2,0,2}
+		};
+		return DialogueCreator.createGridDialogue(nodDtls, 440.0);
+	}
+
+	private void createNonBSale(NonBeveragePrdct nonBProduct, PurchaseDtls purchaseDtls,String UnitPriceStr) {
+		NonBeveragePrdctSale salePrdctInvoice = new NonBeveragePrdctSale();
+		salePrdctInvoice.setNonBeveragePrdct(nonBProduct);
+		if(nonBProduct.getProductNm().equalsIgnoreCase(ApplicationConstant.BOTTLE)){
+			salePrdctInvoice.setSellingQty(purchaseDtls.getReturingBottleQty());
+		}	
+		else if(nonBProduct.getProductNm().equalsIgnoreCase(ApplicationConstant.SHELL)){
+			salePrdctInvoice.setSellingQty(purchaseDtls.getReturningCellQty());
+		}
+		salePrdctInvoice.setUnitPrice(Double.parseDouble(UnitPriceStr));
+		salePrdctInvoice.setCgstRate(nonBProduct.getHsnTax().getCgst());
+		salePrdctInvoice.setSgstRate(nonBProduct.getHsnTax().getSgstOrIgst());
+		salePrdctInvoice.setIgstRate(nonBProduct.getHsnTax().getIgst());
+		salePrdctInvoice.setCessRate(nonBProduct.getHsnTax().getCess());
+		double netBaseAmt = salePrdctInvoice.getSellingQty()*salePrdctInvoice.getUnitPrice();
+		
+		double taxableAmt = netBaseAmt;
+		double cgstAmt =0;
+		double sgstAmt =0;
+		double igstAmt =0; 
+		
+		String deliveryTo=(String) state.getSelectedToggle().getUserData();
+		if(ApplicationConstant.DELIVERY_TO_SAME_STATE.equalsIgnoreCase(deliveryTo)){
+			sgstAmt = taxableAmt*salePrdctInvoice.getSgstRate()/100;
+			cgstAmt = taxableAmt*salePrdctInvoice.getCgstRate()/100;
+		}
+		else{
+			igstAmt=taxableAmt*salePrdctInvoice.getIgstRate()/100;
+		}
+		double cessAmt = taxableAmt*salePrdctInvoice.getCessRate()/100;
+		double netAmount = taxableAmt+cgstAmt+sgstAmt+igstAmt+cessAmt;
+		
+		salePrdctInvoice.setNetBaseAmt(Utility.decimalRound(netBaseAmt));
+		totalBaseAmt.set(Utility.decimalRound(totalBaseAmt.get()+netBaseAmt));
+		salePrdctInvoice.setDisocuntAmt(0);
+		salePrdctInvoice.setTaxableAmt(Utility.decimalRound(taxableAmt));
+		totalTaxableAmt.set(Utility.decimalRound(totalTaxableAmt.get()+salePrdctInvoice.getTaxableAmt()));
+		salePrdctInvoice.setCgstAmt(Utility.decimalRound(cgstAmt));
+		totalCGSTAmt.set(Utility.decimalRound(salePrdctInvoice.getCgstAmt()+totalCGSTAmt.get()));
+		salePrdctInvoice.setSgstAmt(Utility.decimalRound(sgstAmt));
+		totalSGSTAmt.set(Utility.decimalRound(salePrdctInvoice.getSgstAmt()+totalSGSTAmt.get()));
+		salePrdctInvoice.setIgstAmt(Utility.decimalRound(igstAmt));
+		totalIGSTAmt.set(Utility.decimalRound(salePrdctInvoice.getIgstAmt()+totalIGSTAmt.get()));
+		salePrdctInvoice.setCessAmt(Utility.decimalRound(cessAmt));
+		totalCessAmt.set(Utility.decimalRound(salePrdctInvoice.getCessAmt()+totalCessAmt.get()));
+		salePrdctInvoice.setSysGnrtdNetAmt(Utility.decimalRound(netAmount));
+		netAmt.set(Utility.decimalRound(netAmt.get()+salePrdctInvoice.getSysGnrtdNetAmt()));
+		returnEmptyTable.getItems().add(salePrdctInvoice);
+	}
+	
 }

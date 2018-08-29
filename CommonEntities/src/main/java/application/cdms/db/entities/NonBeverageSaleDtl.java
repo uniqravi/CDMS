@@ -49,7 +49,7 @@ public class NonBeverageSaleDtl {
 	private Calendar nbSaleDt;
 	
 	@Column(name="invoice_type")
-	private InvoiceType invoiceType;
+	private String invoiceType;
 	
 	@Column(name="cstmr_firm_gstn")
 	private String cstmrFirmGstn;
@@ -97,11 +97,11 @@ public class NonBeverageSaleDtl {
 		this.nbSaleDt = nbSaleDt;
 	}
 
-	public InvoiceType getInvoiceType() {
+	public String getInvoiceType() {
 		return invoiceType;
 	}
 
-	public void setInvoiceType(InvoiceType invoiceType) {
+	public void setInvoiceType(String invoiceType) {
 		this.invoiceType = invoiceType;
 	}
 

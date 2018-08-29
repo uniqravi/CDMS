@@ -151,7 +151,7 @@
                                                              
                                     <HBox alignment="CENTER_LEFT" style="-fx-border-color: #E0E0E0; -fx-border-width: 1.0px 0px 0px 0px;">
                                        <children>
-                                          <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="118.0" styleClass="value_label" text="Net Amount: " />
+                                          <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="118.0" styleClass="value_label" text="Net Amount: &#x20b9;" />
                                           <JFXTextField fx:id="netAmtTextFld" editable="false" prefHeight="30.0" prefWidth="131.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
                                        </children>
                                        <VBox.margin>

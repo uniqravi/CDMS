@@ -2,7 +2,6 @@ package application.cdms.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -25,17 +24,19 @@ import application.ValidationRegex;
 import application.cdms.component.data.handler.AlertDialog;
 import application.cdms.component.data.handler.CellFactoryGenerator;
 import application.cdms.component.data.handler.CustomeStringConverter;
+import application.cdms.component.data.handler.DialogueCreator;
 import application.cdms.component.data.handler.ErrorDialog;
 import application.cdms.component.data.handler.SuccessDialog;
 import application.cdms.constants.ApplicationConstant;
+import application.cdms.enums.PaymentMethod;
 import application.cdms.models.FirmSeller;
 import application.cdms.models.HsnTax;
 import application.cdms.models.NonBeveragePrdct;
-import application.cdms.models.PaymentMethod;
 import application.cdms.models.Product;
 import application.cdms.models.ProductBreakageDtl;
 import application.cdms.models.PurchaseDtls;
 import application.cdms.models.PurchaseProductDtl;
+import application.cdms.service.CDMSDataProviderService;
 import application.cdms.service.ProductService;
 import application.cdms.service.impl.ProductServiceImpl;
 import application.cdms.utilities.Calculation;
@@ -71,7 +72,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -237,13 +237,18 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 	
 	private ProductService productService = ProductServiceImpl.getInstance();
 	
+	private CDMSDataProviderService dataProviderService = CDMSDataProviderService.createCDMSDataProvider();
+	
 	private ObservableList<Product> productList=productService.productList();
 	
 	private ObservableList<NonBeveragePrdct> nonBProduct = productService.nonBproductList();
 	
-	//PubottlePurchasedtl 
+	private boolean isDefaultPriceSet=false;
 
 	int i = 1;
+	
+	//object[1] ='Non Beverage Product Name' Object[2] price;
+	private ObservableList<String[]> defaultPrices = dataProviderService.getNonBeveragePrdctsPrice();
 	
 	private final AddPurchasedProductConstroller.PurchaseTableSumData purschaseSum=new PurchaseTableSumData("Total",0L,0.0,0.0,0.0,0.0);
 	
@@ -252,10 +257,8 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 	@Override
 	public void setScreenTransitionController(Object obj) {
 		if (obj instanceof ScreenTransitionController) {
-			// System.out.println("inside"+obj);
 			this.t = (ScreenTransitionController) obj;
 		}
-		// showAddPersonDialog(t.getRootStage(),purchasedProductsTable,200);
 	}
      
 	
@@ -272,7 +275,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 				firmGstn.setDisable(true);
 			}
 		});
-		//cal=Calendar.getInstance();
 		challan_date_text.setConverter(new CustomeStringConverter());
 		challan_date_text.setDayCellFactory(CellFactoryGenerator.getFutureDayDisableCellFactory());
 		ObservableList<String> paymentMethods=FXCollections.observableArrayList();
@@ -297,8 +299,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		});
 		paymentAmountTextFld.setDisable(true);
 		paymentIdTextFld.setDisable(true);
-		//totalPurchasedPrdctQtyTextFld.setDisable(true);
-		//TotalGlassQtyTextFld.setDisable(true);
 		
 		int purchaseTableColumns = purchasedProductsTable.getColumns().size();
 		
@@ -430,10 +430,8 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 				Label heading = new Label("Update purchase price");
 				heading.setStyle("-fx-font-size: 22px;-fx-text-fill:#3F51B5");
 				dilogLayout.setHeading(heading);
-				//dilogLayout.setStyle("-fx-background-color: #e5eaf5;");//#3F51B5;
 				productDilogu = new JFXDialog(((StackPane) t.getCurrentNode()), dilogLayout, DialogTransition.CENTER);
 				dilogLayout.setBody(loadDialogNonBeveBody(productDilogu,index));
-				//dilogLayout.setPrefWidth(700);
 				productDilogu.setOverlayClose(false);
 				productDilogu.show();
 			});
@@ -463,7 +461,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 	JFXDialog productDilogu=null;
 	@FXML
     void addNewRowToTable(ActionEvent event) {
-		//showAddPersonDialog(t.getRootStage(),purchasedProductsTable,100);((StackPane) t.getCurrentNode())
 		showDialogAddNewProductRow(((StackPane) t.getCurrentNode()));
     }
 	
@@ -473,10 +470,8 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		heading.setStyle("-fx-font-size: 22px;-fx-text-fill:#3F51B5");
 		dilogLayout.setHeading(heading);
 		productDilogu = new JFXDialog(stackPane, dilogLayout, DialogTransition.CENTER);
-		//dilogLayout.setStyle("-fx-background-color: #e5eaf5;");//#3F51B5;
 		try {
 			dilogLayout.setBody(loadDialogBody());
-			//dilogLayout.setPrefWidth(700);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -604,6 +599,7 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 	
 	private void addProductIntoTable(){
 		boolean isError=false;
+		boolean isReturnablePrdct=false;
 		Product product=prodObjectProp.get();
 		String productQtyStr=productQtyProp.get();
 		String burstStr=burstProp.get();
@@ -621,20 +617,16 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		String grossAmntStr=grossAmntProp.get();
 		String mrp = dilogMrpProp.get();
 		StringBuilder strBuild = new StringBuilder();
-		//List<Node> errortext = new ArrayList<Node>(); 
 		if(product==null){
 			strBuild.append("Please select product name. \n");
-			//errortext.add(new Text("Please select product name"));
 			isError=true;
 		}
 		if(productQtyStr==null || productQtyStr.trim().equals("")){
 			strBuild.append("Please fill product quantity. \n");
-			//errortext.add(new Text("Please fill product quantity."));
 			isError=true;
 		}
 		else if(!productQtyStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in Product (Qty). \n");
-			//errortext.add(new Text("Only digits are allowed in Product (Qty)."));
 			isError=true;
 		}
 		if(burstStr==null || burstStr.trim().equals("")){
@@ -642,7 +634,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!burstStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in Burst(B/s). \n");
-			//errortext.add(new Text("Only digits are allowed in Burst(B/s)."));
 			isError=true;
 		}
 		if(leakageStr==null || leakageStr.trim().equals("")){
@@ -650,7 +641,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!leakageStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in Leakage(B/s). \n");
-			//errortext.add(new Text("Only digits are allowed in Leakage(B/s)."));
 			isError=true;
 		}
 		if(shortageStr==null || shortageStr.trim().equals("")){
@@ -658,7 +648,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!shortageStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in Leakage(B/s). \n");
-			//errortext.add(new Text("Only digits are allowed in Leakage(B/s)."));
 			isError=true;
 		}
 		if(sealPackStr==null || sealPackStr.trim().equals("")){
@@ -666,7 +655,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!sealPackStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in SealPackShortage(B/s). \n");
-			//errortext.add(new Text("Only digits are allowed in SealPackShortage(B/s)."));
 			isError=true;
 		}
 		if(openMouthStr==null || openMouthStr.trim().equals("")){
@@ -674,17 +662,14 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!openMouthStr.matches(ValidationRegex.ONLYDIGIT)){
 			strBuild.append("Only digits are allowed in Open Mouth(B/s). \n");
-			//errortext.add(new Text("Only digits are allowed in Open Mouth(B/s)."));
 			isError=true;
 		}
 		if(ttlBaseAmountStr==null || ttlBaseAmountStr.trim().equals("")){
 			strBuild.append("Please fill product Total Base Amount. \n");
-			//errortext.add(new Text("Please fill product Total Base Amount."));
 			isError=true;
 		}
 		else if(!ttlBaseAmountStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please input valid Total Base Amount. \n");
-			//errortext.add(new Text("Please input valid Total Base Amount."));
 			isError=true;
 		}
 		if(discountStr==null || discountStr.trim().equals("")){
@@ -692,39 +677,32 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!discountStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid discount amount. \n");
-			//errortext.add(new Text("Please enter valid discount amount."));
 			isError=true;
 		}
 		if(taxableAmntStr==null || taxableAmntStr.trim().equals("")){
 			strBuild.append("Please fill product total taxable amount. \n");
-			//errortext.add(new Text("Please fill product total taxable amount."));
 			isError=true;
 		}
 		else if(!taxableAmntStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid total taxable amount. \n");
-			//errortext.add(new Text("Please enter valid total taxable amount."));
 			isError=true;
 		}
 		if(csgtStr==null || csgtStr.trim().equals("")){
 			strBuild.append("Please fill CGST amount. \n");
-			//errortext.add(new Text("Please fill CGST amount"));
 			isError=true;
 		}
 		else if(!csgtStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid CGST amount. \n");
-			//errortext.add(new Text("Please enter valid CGST amount."));
 			isError=true;
 		}
 		if((sgstStr==null || sgstStr.trim().equals("")) && (igstStr==null || igstStr.trim().equals(""))){
 			strBuild.append("Please fill SGST or IGST amount. \n");
-			//errortext.add(new Text("Please fill SGST or IGST amount"));
 			isError=true;
 		}
 		else if(sgstStr==null || sgstStr.trim().equals("")){
 			sgstStr="0.00";
 			if(!igstStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 				strBuild.append("Please enter valid IGST amount. \n");
-				//errortext.add(new Text("Please enter valid IGST amount"));
 				isError=true;
 			}
 		}
@@ -732,7 +710,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 			igstStr="0.00";
 			if(!sgstStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 				strBuild.append("Please enter valid SGST amount. \n");
-				//errortext.add(new Text("Please enter valid SGST amount"));
 				isError=true;
 			}
 		}
@@ -741,27 +718,22 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 		else if(!cessStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid CGST amount. \n");
-			//errortext.add(new Text("Please enter valid CGST amount."));
 			isError=true;
 		}
 		if(grossAmntStr==null || grossAmntStr.trim().equals("")){
 			strBuild.append("Please fill gross amount. \n");
-			//errortext.add(new Text("Please fill gross amount."));
 			isError=true;
 		}
 		else if(!grossAmntStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid gross amount. \n");
-			//errortext.add(new Text("Please enter valid gross amount."));
 			isError=true;
 		}
 		if(mrp==null || mrp.trim().equals("")){
 			strBuild.append("Please fill Product MRP. \n");
-			//errortext.add(new Text("Please fill gross amount."));
 			isError=true;
 		}
 		else if(!mrp.matches(ValidationRegex.DOUBLENUMBERCHECK)){
 			strBuild.append("Please enter valid MRP. \n");
-			//errortext.add(new Text("Please enter valid gross amount."));
 			isError=true;
 		}
 		if(isError){
@@ -814,7 +786,6 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 			purchaseProductDtl.setNetPrdctAmnt(grossAmt);
 			purchaseProductDtl.setMrp(mrpAmt);
 			//calculation of totalLoad and totalPurchased Glass
-//			/String totalLoadStr=totalPurchasedPrdctQtyTextFld.getText();
 			long totalLoad=purschaseSum.getTotalqty();
 			totalLoad=totalLoad+Long.parseLong(productQtyStr);
 			//totalPurchasedPrdctQtyTextFld.setText(totalLoad+"");
@@ -839,10 +810,15 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 				long totalPurchaseGlass=totalPurchasedGlassStr!=null && !totalPurchasedGlassStr.equals("")?Long.parseLong(totalPurchasedGlassStr):0;
 				totalPurchaseGlass=totalPurchaseGlass+Integer.parseInt(productQtyStr);
 				TotalGlassQtyTextFld.setText(totalPurchaseGlass+"");
+				isReturnablePrdct=true;
 			}
+			
 			ObservableList<PurchaseProductDtl> purchasedPrdctLst=purchasedProductsTable.getItems();//;.add(purchaseProductDtl);
 			purchasedPrdctLst.add(purchaseProductDtl);
 			productDilogu.close();
+			if(isReturnablePrdct && !isDefaultPriceSet) {
+				showNonBevPriceDialog((igstAmt!=0.0));
+			}
 			System.out.println(product.getProductNm());
 		}
 		else{
@@ -850,6 +826,118 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		}
 	}
 	
+	private void showNonBevPriceDialog(boolean isIgst) {
+		JFXDialog productDilogu=null;
+		JFXDialogLayout dilogLayout = new JFXDialogLayout();
+		Label heading = new Label("Set Non Beverage Products Price :");
+		heading.setStyle("-fx-font-size: 22px;-fx-text-fill:#3F51B5");
+		dilogLayout.setHeading(heading);
+		productDilogu = new JFXDialog(((StackPane) t.getCurrentNode()), dilogLayout, DialogTransition.CENTER);
+		dilogLayout.setBody(bodyforNonBevDefaultPriceSet(productDilogu,isIgst));
+		productDilogu.setOverlayClose(false);
+		productDilogu.show();
+	}
+
+
+	private Pane bodyforNonBevDefaultPriceSet(JFXDialog productDilogu,boolean isIgst) {
+		
+		//row : 0;
+		Label warningHeader = new Label("Do You want continue with below default price?"); 
+		warningHeader.setStyle("-fx-text-fill: purple; -fx-font-size: 15px;-fx-pref-height:24.0;-fx-pref-width:408.0;-fx-alignment: CENTER;");
+		
+		//row : 1
+		Label bottleUnitPriceLabel = new Label("Bottle Unit Price"); 
+		bottleUnitPriceLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:160.0;-fx-alignment: CENTER_RIGHT;");
+		
+		Label bottleRsSymbol = new Label("₹"); 
+		bottleRsSymbol.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:83.0;-fx-alignment: CENTER_RIGHT;");
+		
+		TextField bottleUnitPriceFld = new JFXTextField();
+		bottleUnitPriceFld.setStyle("-fx-pref-height:34.0;-fx-font-size: 14px;");
+		
+		//row	: 2
+		Label shellUnitPriceLabel = new Label("Bottle Unit Price"); 
+		shellUnitPriceLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:160.0;-fx-alignment: CENTER_RIGHT;");
+		
+		Label shellRsSymbol = new Label("₹"); 
+		shellRsSymbol.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:83.0;-fx-alignment: CENTER_RIGHT;");
+		
+		TextField shellUnitPriceFld = new JFXTextField();
+		shellUnitPriceFld.setStyle("-fx-pref-height:34.0;-fx-font-size: 14px;");
+		
+		//row : 3
+		JFXButton setPriceBtn = new JFXButton("Set Price");
+		setPriceBtn.setButtonType(ButtonType.RAISED);
+		setPriceBtn.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-pref-height:29.0;-fx-pref-width:181.0;");
+		
+		JFXButton cancelBtn = new JFXButton("Cancel");
+		cancelBtn.setButtonType(ButtonType.RAISED);
+		cancelBtn.setStyle("-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-pref-height:29.0;-fx-pref-width:201.0;");
+		
+		//set actions
+		for(String[] strArr : defaultPrices) {
+			if(ApplicationConstant.BOTTLE.equals(strArr[1]) ){
+				bottleUnitPriceFld.setText(strArr[2]);
+			}
+			else if(ApplicationConstant.SHELL.equals(strArr[1]) ) {
+				shellUnitPriceFld.setText(strArr[2]);
+			}
+		}
+		setPriceBtn.setOnAction( (e) ->{
+			StringBuilder strbuild = new StringBuilder();
+			boolean isError = false;
+			String bottleUnitPriceStr = bottleUnitPriceFld.getText();
+			String shellUnitPriceStr  = shellUnitPriceFld.getText();
+			if(bottleUnitPriceStr==null || bottleUnitPriceStr.trim().equals("") || !bottleUnitPriceStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
+				strbuild.append("Please provide valid bottle Unit Price");
+				isError=true;
+			}
+			if(shellUnitPriceStr==null || shellUnitPriceStr.trim().equals("") 
+					|| !shellUnitPriceStr.matches(ValidationRegex.DOUBLENUMBERCHECK)){
+				strbuild.append("Please provide valid shell Unit Price");
+				isError=true;
+			}
+			else if(Double.parseDouble(shellUnitPriceStr)==0.0) {
+				strbuild.append("Please provide valid shell Unit Price");
+				isError=true;
+			}
+			if(isError){
+				ErrorDialog.showErrorDilogue(new Text(strbuild.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
+				return;
+			}
+			ObservableList<PurchaseProductDtl> nbPurchaseList=nB_purchasedProductsTable.getItems();
+			for(PurchaseProductDtl nbPurchase:nbPurchaseList) {
+				if(ApplicationConstant.BOTTLE.equals(nbPurchase.getProduct().getProductNm())) {
+					updtPurchasePrdctDtlPrice(nbPurchase, bottleUnitPriceStr, isIgst);
+				}
+				else if(ApplicationConstant.SHELL.equals(nbPurchase.getProduct().getProductNm())) {
+					updtPurchasePrdctDtlPrice(nbPurchase, shellUnitPriceStr, isIgst);
+				}
+			}
+			isDefaultPriceSet=true;
+			nB_purchasedProductsTable.refresh();
+			productDilogu.close();
+		});
+		
+		cancelBtn.setOnAction( (e) ->{
+			productDilogu.close();
+		});
+		
+		Object[][] nodDtls = new Object[][]{
+				{warningHeader,0,0,0,3},
+				{bottleUnitPriceLabel,1,0,0,0},
+				{bottleRsSymbol,1,1,0,0},
+				{bottleUnitPriceFld,1,2,0,0},
+				{shellUnitPriceLabel,2,0,0,0},
+				{shellRsSymbol,2,1,0,0},
+				{shellUnitPriceFld,2,2,0,0},
+				{setPriceBtn,3,0,0,3},
+				{cancelBtn,3,2,0,2}
+		};
+		return DialogueCreator.createGridDialogue(nodDtls, 440.0);
+	}
+
+
 	private void closeDialog(){
 		productDilogu.close();
 	}
@@ -935,25 +1023,20 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 		String challanDt=null;
 		String challanNo=null;
 		String invoiceNo=null;
-		//String challanAmount=null;
-		//String discountAmount=null;
 		String paymentMethod=null;
 		String paymentId=null;
 		String paidAmount=null;
 		String totalGlassQty=null;
 		String totalReturnGlassQty=null;
 		String purchasedComment=null;
-		//String totalPurchasedProduct=null;
-		ArrayList<Node> errorTextlst=new ArrayList<>();
 		boolean isError=false;
 		try{
+			StringBuilder sb = new StringBuilder();
 			firmNameStr=firmName.getText();
 			firmGstnStr=firmGstn.getText();
 			challanDt=challan_date_text.getConverter().toString(challan_date_text.getValue());
 			challanNo=challan_no_textFld.getText();
 			invoiceNo=invoiceNoTextFld.getText();
-			//challanAmount=challanAmountTextField.getText();
-			//discountAmount=totalDiscountTextFld.getText();
 			paymentMethod=paymentMethodComboBox.getValue();
 			paymentId=paymentIdTextFld.getText();
 			paidAmount=paymentAmountTextFld.getText();
@@ -962,41 +1045,40 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 			purchasedComment=purchasecomment.getText();
 			ObservableList<PurchaseProductDtl> buyPrdctLst=purchasedProductsTable.getItems();
 			ObservableList<PurchaseProductDtl> nonBBuyPrdctLst=nB_purchasedProductsTable.getItems();
-			//totalPurchasedProduct=totalPurchasedPrdctQtyTextFld.getText();
 			if(firmNameStr==null || "".equals(firmNameStr.trim())){
-				errorTextlst.add(new Text("Please provide Firm Name."));
+				sb.append("Please provide Firm Name. \n");
 				isError=true;
 			}
 			if(firmGstnStr==null || "".equals(firmGstnStr.trim())){
-				errorTextlst.add(new Text("Please provide Firm GSTN Number."));
+				sb.append("Please provide Firm GSTN Number. \n");
 				isError=true;
 			}
 			if(challanDt==null || "".equals(challanDt.trim())){
-				errorTextlst.add(new Text("Please provide challan date."));
+				sb.append("Please provide challan date. \n");
 				isError=true;
 			}
 			if(challanNo==null || "".equals(challanNo.trim())){
-				errorTextlst.add(new Text("Please provide challan number in input field."));
+				sb.append("Please provide challan number in input field. \n");
 				isError=true;
 			}
 			if(invoiceNo==null || "".equals(invoiceNo.trim())){
-				errorTextlst.add(new Text("Please provide invoice number in input field."));
+				sb.append("Please provide invoice number in input field. \n");
 				isError=true;
 			}
 			if(buyPrdctLst.size()==0){
-				errorTextlst.add(new Text("purchase book cannot be empty."));
+				sb.append("purchase book cannot be empty. \n");
 				isError=true;
 			}
 			if(paymentMethod!=null && !paymentMethod.equals("")){
 				if(paidAmount==null || paidAmount.trim().equals("") || paidAmount.trim().equals("0") || paidAmount.trim().equals("0.0")){
-					errorTextlst.add(new Text("Payment amount is mandatory after choosing payment method."));
+					sb.append("Payment amount is mandatory after choosing payment method. \n");
 					isError=true;
 				}
 				else if(!Pattern.matches(ValidationRegex.DOUBLENUMBERCHECK,paidAmount)){
-					errorTextlst.add(new Text("value in Payment amount field is invalid."));
+					sb.append("value in Payment amount field is invalid. \n");
 				}
 				if(paymentId==null || paymentId.trim().equals("")){
-					errorTextlst.add(new Text("Paymend id is mandatory field after choosing payment method."));
+					sb.append("Paymend id is mandatory field after choosing payment method. \n");
 					isError=true;
 				}
 			}
@@ -1008,20 +1090,20 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 				totalGlassQty="0";
 			}
 			else if(!Pattern.matches(ValidationRegex.DOUBLENUMBERCHECK, totalGlassQty)){
-				errorTextlst.add(new Text("value in total Glass Qty field is invalid."));
+				sb.append("value in total Glass Qty field is invalid. \n");
 				isError=true;
 			}
 			if(totalReturnGlassQty==null || totalReturnGlassQty.trim().equals("")){
-				errorTextlst.add(new Text("Please enter return glass qty."));
+				sb.append("Please enter return glass qty. \n");
 				isError=true;
 				//totalReturnGlassQty="0";
 			}
 			else if(!Pattern.matches(ValidationRegex.DOUBLENUMBERCHECK, totalReturnGlassQty)){
-				errorTextlst.add(new Text("value in total Return Glass Qty field is invalid."));
+				sb.append("value in total Return Glass Qty field is invalid. \n");
 				isError=true;
 			}
 			if(isError){
-				ErrorDialog.showErrorDilogue(errorTextlst, ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
+				ErrorDialog.showErrorDilogue(new Text(sb.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
 				((JFXButton) event.getSource()).setDisable(false);
 				return ;
 			}
@@ -1067,22 +1149,30 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
     }
 	
 	private Pane loadDialogNonBeveBody(JFXDialog dialog,int index){
-		GridPane gridpane = new GridPane();
+		
 		Label basicValLabel = new Label("Unit Price");
-		TextField basicVal=new TextField();
-		basicVal.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		basicValLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-font-size: 15px;;-fx-alignment: CENTER_RIGHT ;");
+		
+		Label rsSymbol = new Label("₹");
+		rsSymbol.setStyle("-fx-pref-height:34;-fx-pref-width:83.0;-fx-font-size: 15px;;-fx-alignment: CENTER_RIGHT ;");
+		
+		TextField basicVal=new JFXTextField();
+		basicVal.setStyle("-fx-pref-height:34.0;");
+		
 		ToggleGroup toggleGroup = new ToggleGroup();
-		RadioButton withCell = new RadioButton(ApplicationConstant.DELIVERY_TO_SAME_STATE);
-		RadioButton withoutCell = new RadioButton(ApplicationConstant.DELIVERY_TO_OTHER_STATE);
-		withCell.setToggleGroup(toggleGroup);
-		withCell.setUserData(ApplicationConstant.DELIVERY_TO_SAME_STATE);
-		withCell.setSelected(true);
-		withoutCell.setUserData(ApplicationConstant.DELIVERY_TO_OTHER_STATE);
-		withoutCell.setToggleGroup(toggleGroup);
+		RadioButton sameState = new RadioButton(ApplicationConstant.DELIVERY_TO_SAME_STATE);
+		RadioButton outerState = new RadioButton(ApplicationConstant.DELIVERY_TO_OTHER_STATE);
+		sameState.setToggleGroup(toggleGroup);
+		sameState.setUserData(ApplicationConstant.DELIVERY_TO_SAME_STATE);
+		sameState.setSelected(true);
+		outerState.setUserData(ApplicationConstant.DELIVERY_TO_OTHER_STATE);
+		outerState.setToggleGroup(toggleGroup);
+		
 		JFXButton setPrice = new JFXButton("Set Price");
 		setPrice.setButtonType(ButtonType.RAISED);
-		setPrice.setStyle("-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
+		setPrice.setStyle("-fx-pref-height:29;-fx-pref-width:181.0;-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-font-family:arial;");
 		setPrice.setOnAction( (e) ->{
+			boolean isIgst=false;
 			String basicValStr = basicVal.getText();
 			StringBuilder strbuild = new StringBuilder();
 			boolean isError=false;
@@ -1095,53 +1185,67 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 				ErrorDialog.showErrorDilogue(new Text(strbuild.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
 				return;
 			}
-			//addItemTable(prod,qtyStr,basicValStr,mrpStr,withCellObj,cellStr);
-			PurchaseProductDtl nonBPurchPrdct=nB_purchasedProductsTable.getItems().get(index);
-			long qty=nonBPurchPrdct.getProduct_qty();
-			HsnTax hsn=nonBPurchPrdct.getProduct().getHsnTax();
-			double totalBasic = Double.parseDouble(basicValStr)*qty;
-			double discount = 0;
-			double totalTaxable = totalBasic-discount;
-			double cgst = hsn.getCgst()*totalTaxable;
-			double sgst =0;
-			double igst =0;
+			
 			if(ApplicationConstant.DELIVERY_TO_SAME_STATE.equalsIgnoreCase(toggleGroup.getSelectedToggle().getUserData().toString())){
-				sgst = hsn.getSgstOrIgst()*totalTaxable;
+				isIgst=false;
 			}
 			else{
-				igst = hsn.getIgst()*totalTaxable;
+				isIgst=true;
 			}
-			double cess = hsn.getCess()*totalTaxable;
-			double grossAmt = totalTaxable+cgst+sgst+igst+cess;
-			nonBPurchPrdct.setTotalBaseAmt(Utility.decimalRound(totalBasic));
-			nonBPurchPrdct.setDiscountAmt(Utility.decimalRound(discount));
-			nonBPurchPrdct.setNetTaxableAmt(Utility.decimalRound(totalTaxable));
-			nonBPurchPrdct.setTotalPrdctCGSTAmt(Utility.decimalRound(cgst));
-			nonBPurchPrdct.setTotalPrdctSGSTAmt(Utility.decimalRound(sgst));
-			nonBPurchPrdct.setTotalPrdctIGSTAmt(Utility.decimalRound(igst));
-			nonBPurchPrdct.setTotalPrdctCessAmt(Utility.decimalRound(cess));
-			nonBPurchPrdct.setUnitPrice(Double.parseDouble(basicValStr));
-			nonBPurchPrdct.setNetPrdctAmnt(Utility.decimalRound(grossAmt));
+			PurchaseProductDtl nonBPurchPrdct=nB_purchasedProductsTable.getItems().get(index);
+			updtPurchasePrdctDtlPrice(nonBPurchPrdct, basicValStr, isIgst);
 			nB_purchasedProductsTable.refresh();
 			dialog.close();
 		});
+		
 		JFXButton cancel = new JFXButton("Close");
 		cancel.setButtonType(ButtonType.RAISED);
 		cancel.setOnAction( (e) ->{
 			dialog.close();
 		});
-		cancel.setStyle("-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
-		gridpane.add(basicValLabel, 0,0);
-		gridpane.add(basicVal, 1,0);
-		gridpane.add(withCell, 0,1);
-		gridpane.add(withoutCell, 1,1);
-		gridpane.add(setPrice,0,2);
-		gridpane.add(cancel,1,2);
-		//GridPane.setConstraints(setPrice, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER);
-		//GridPane.setConstraints(cancel, 1, 1, 2, 1, HPos.RIGHT, VPos.CENTER);
-		gridpane.setHgap(3);
-		gridpane.setVgap(5);
-		return gridpane;
+		cancel.setStyle("-fx-pref-height:29;-fx-pref-width:201.0;-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-size: 13px;-fx-font-family:arial;");
+		
+		Object[][] nodeDtls = new Object[][] {
+			{basicValLabel,0,0,0,0},
+			{rsSymbol,0,1,0,0},
+			{basicVal,0,2,0,0},
+			{sameState,1,0,0,3},
+			{outerState,1,2,0,2},
+			{setPrice,2,0,0,3},
+			{cancel,2,2,0,2}
+		};
+		return DialogueCreator.createGridDialogue(nodeDtls, 450);
+	}
+	
+	private void updtPurchasePrdctDtlPrice(PurchaseProductDtl nonBPurchPrdct,String basicValStr,boolean isIgst) {
+		long qty=nonBPurchPrdct.getProduct_qty();
+		HsnTax hsn=nonBPurchPrdct.getProduct().getHsnTax();
+		double unitPrice=Double.parseDouble(basicValStr);
+		
+		double totalBasic = unitPrice*qty;
+		double discount = 0;
+		double totalTaxable = totalBasic-discount;
+		double cgst = 0;
+		double sgst =0;
+		double igst =0;
+		if(!isIgst){
+			cgst=hsn.getCgst()*totalTaxable;
+			sgst = hsn.getSgstOrIgst()*totalTaxable;
+		}
+		else{
+			igst = hsn.getIgst()*totalTaxable;
+		}
+		double cess = hsn.getCess()*totalTaxable;
+		double grossAmt = totalTaxable+cgst+sgst+igst+cess;
+		nonBPurchPrdct.setTotalBaseAmt(Utility.decimalRound(totalBasic));
+		nonBPurchPrdct.setDiscountAmt(Utility.decimalRound(discount));
+		nonBPurchPrdct.setNetTaxableAmt(Utility.decimalRound(totalTaxable));
+		nonBPurchPrdct.setTotalPrdctCGSTAmt(Utility.decimalRound(cgst));
+		nonBPurchPrdct.setTotalPrdctSGSTAmt(Utility.decimalRound(sgst));
+		nonBPurchPrdct.setTotalPrdctIGSTAmt(Utility.decimalRound(igst));
+		nonBPurchPrdct.setTotalPrdctCessAmt(Utility.decimalRound(cess));
+		nonBPurchPrdct.setUnitPrice(unitPrice);
+		nonBPurchPrdct.setNetPrdctAmnt(Utility.decimalRound(grossAmt));
 	}
 	
 	@Override
@@ -1187,25 +1291,19 @@ public class AddPurchasedProductConstroller implements Initializable, ScreenCont
 						shellPurchasedtl.setProduct(nonBProduct.get(1));
 						bottlePurchasedtl.setProduct_qty(totalBottleQty.get());
 						shellPurchasedtl.setProduct_qty(totalShellQty.get());
+						bottlePurchasedtl.refreshPrice();
+						shellPurchasedtl.refreshPrice();
 						if(nB_purchasedProductsTable.getItems().size()==0){
 							nB_purchasedProductsTable.getItems().addAll(bottlePurchasedtl,shellPurchasedtl);
 						}
-						/*else{
-							ObservableList<PurchaseProductDtl> nonBPurLst = nB_purchasedProductsTable.getItems();
-							int count=0;
-							for(PurchaseProductDtl nonBPurchase : nonBPurLst){
-								if(count==2){
-									break;
-								}
-								else if(nonBPurchase.getProduct().getProductNm().equals(anObject))
-							}
-						}*/
 					}
 					else if(newValue.longValue()>0){
 						PurchaseProductDtl bottlePurchasedtl=nB_purchasedProductsTable.getItems().get(0);
 						bottlePurchasedtl.setProduct_qty(totalBottleQty.get());
 						PurchaseProductDtl shellPurchasedtl=nB_purchasedProductsTable.getItems().get(1);
 						shellPurchasedtl.setProduct_qty(totalShellQty.get());
+						bottlePurchasedtl.refreshPrice();
+						shellPurchasedtl.refreshPrice();
 						nB_purchasedProductsTable.refresh();
 					}
 			});

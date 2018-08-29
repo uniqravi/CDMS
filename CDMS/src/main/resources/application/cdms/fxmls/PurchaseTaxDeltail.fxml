@@ -157,19 +157,19 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Gross Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Gross Amount  : &#x20b9;" />
                                                       <Label id="challanAmount" prefHeight="46.0" prefWidth="180.0" styleClass="name_label" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Discount Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Discount Amount : &#x20b9;" />
                                                       <Label id="totalDiscount" prefHeight="46.0" prefWidth="180.0" styleClass="name_label" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="46.0" prefWidth="445.0">
                                                    <children>
-                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Paid Amount : " />
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="137.0" styleClass="value_label" text="Paid Amount :&#x20b9;" />
                                                       <Label id="paidAmount" prefHeight="46.0" prefWidth="180.0" styleClass="name_label" />
                                                    </children>
                                                 </HBox>

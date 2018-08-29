@@ -1,4 +1,4 @@
-package application.cdms.models;
+package application.cdms.enums;
 
 public enum PaymentMethod {
     NEFT("NEFT"),CHEQUE("CHEQUE"),IMPS("IMPS"),RTGS("RTGS"); 

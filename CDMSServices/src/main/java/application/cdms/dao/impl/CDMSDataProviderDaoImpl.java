@@ -31,18 +31,25 @@ public final class CDMSDataProviderDaoImpl implements CDMSDataProviderDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> getCDMSDataList(String logKey,String queryId, Object[] values) {
+	public List<Object[]> getCDMSDataList(String logKey,String queryId,int limit, Object[] values) {
 		logger.info(logKey+":: getCDMSDataList :: begin");
+		List<Object[]> dataList=null;
+		try {
 		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(queryId);
 		if(values!=null){
 			for(int i=0;i<values.length;i++){
 				query.setParameter(i,values[i]);
 			}
 		}
+		query.setMaxResults(limit);
 		//query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 		//List<Map<String,Object>> aliasToValueMapList=query.list();
-		List<Object[]> dataList=query.list();
-		HibernateUtils.commitCloseCustomeTransationManager();
+		dataList=query.list();
+		HibernateUtils.getCustomeTrasationManager().commitTx();
+		}
+		finally {
+			HibernateUtils.CloseCustomeTransationManager();
+		}
 		logger.info(logKey+":: getCDMSDataList:: list retrieved ### "+dataList!=null ? dataList.size():"");
 		logger.info(logKey+":: getCDMSDataList :: End");
 		return dataList;

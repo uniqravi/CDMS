@@ -23,6 +23,7 @@ import application.SystemMessages;
 import application.ValidationRegex;
 import application.cdms.component.data.handler.AlertDialog;
 import application.cdms.component.data.handler.CellFactoryGenerator;
+import application.cdms.component.data.handler.DialogueCreator;
 import application.cdms.component.data.handler.ErrorDialog;
 import application.cdms.component.data.handler.PrintJobScreen;
 import application.cdms.component.data.handler.SuccessDialog;
@@ -49,9 +50,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -65,8 +64,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -209,30 +208,54 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 		productDilogu.show();
 	}
 
-	private GridPane loadDialogBody(JFXDialog productDilogu){
-		GridPane gridpane = new GridPane();
+	private Pane loadDialogBody(JFXDialog productDilogu){
+		
 		Label choosePrdctLabel = new Label("Product");
-		choosePrdctLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		choosePrdctLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		
 		Label qtyLabel = new Label("Qty");
-		qtyLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		qtyLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		
+		
 		Label basicValLabel = new Label("Basic Value");
-		basicValLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		basicValLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		
+		
 		Label mrpLabel = new Label("MRP");//-fx-text-fill: #aaa; -fx-font-size: 15px;
-		mrpLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		mrpLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		
+		
 		Label cellQtyLabel = new Label("Cell Qty");
-		cellQtyLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		cellQtyLabel.setStyle("-fx-pref-height:34;-fx-pref-width:160;-fx-text-fill: #aaa; -fx-font-size: 15px;");
+		
+		Label rsSymbol = new Label("₹");
+		rsSymbol.setStyle("-fx-pref-height:34;-fx-pref-width:83.0;-fx-font-size: 15px;-fx-alignment: CENTER_RIGHT;");
+		
+		Label rsSymbol2 = new Label("₹");
+		rsSymbol2.setStyle("-fx-pref-height:34;-fx-pref-width:83.0;-fx-font-size: 15px;-fx-alignment: CENTER_RIGHT;");
+		
 		ComboBox<Product> prdctcomboBox = new ComboBox<>();
-		prdctcomboBox.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		prdctcomboBox.setStyle("-fx-pref-height:36.0;-fx-pref-width:270.0");
 		prdctcomboBox.setItems(productList);
+		
+		
 		TextField qtyFld=new TextField();
-		qtyFld.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		qtyFld.setStyle("-fx-pref-height:34.0;-fx-pref-width:270.0");
+		
+		
 		TextField basicVal = new TextField();
-		basicVal.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		basicVal.setStyle("-fx-pref-height:34.0;-fx-pref-width:270.0");
+		
+		
 		TextField mrpFld = new TextField();
-		mrpFld.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		mrpFld.setStyle("-fx-pref-height:34.0;-fx-pref-width:270.0");
+		
+		
 		TextField cellQtyFld=new TextField();
-		cellQtyFld.setStyle("-fx-pref-height:39.0;-fx-pref-width:270.0");
+		cellQtyFld.setStyle("-fx-pref-height:34.0;-fx-pref-width:270.0");
 		cellQtyFld.setDisable(true);
+		
+		
 		ToggleGroup toggleGroup = new ToggleGroup();
 		RadioButton withCell = new RadioButton("with cell");
 		RadioButton withoutCell = new RadioButton("without cell");
@@ -267,6 +290,8 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 				cellQtyFld.setDisable(true);
 			}
 		});
+		
+		
 		JFXButton addBreakageToTable = new JFXButton("Insert");
 		addBreakageToTable.setButtonType(ButtonType.RAISED);
 		addBreakageToTable.setOnAction( (e) ->{
@@ -301,34 +326,34 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 			addItemTable(prod,qtyStr,basicValStr,mrpStr,withCellObj,cellStr);
 			productDilogu.close();
 		});
+		
+		
 		JFXButton cancel = new JFXButton("Close");
 		cancel.setButtonType(ButtonType.RAISED);
 		cancel.setOnAction( (e) ->{
 			productDilogu.close();
 		});
-		addBreakageToTable.setStyle("-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
-		cancel.setStyle("-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
-		gridpane.add(choosePrdctLabel, 0,0);
-		gridpane.add(qtyLabel, 0,1);
-		gridpane.add(basicValLabel, 0,2);
-		gridpane.add(mrpLabel, 0,3);
-		gridpane.add(prdctcomboBox, 1,0);
-		gridpane.add(qtyFld, 1,1);
-		gridpane.add(basicVal,1,2);
-		gridpane.add(mrpFld,1,3);
-		//GridPane.setConstraints(child, columnIndex, rowIndex, columnspan, rowspan);(toggleGroup, 1);
-		gridpane.add(withCell, 0, 4);
-		gridpane.add(withoutCell, 1, 4);
-		gridpane.add(cellQtyLabel, 0,5);
-		gridpane.add(cellQtyFld, 1,5);
-		gridpane.add(addBreakageToTable,0,6);
-		gridpane.add(cancel,1,6);
-		GridPane.setConstraints(addBreakageToTable, 0, 6, 2, 1, HPos.LEFT, VPos.CENTER);
-		GridPane.setConstraints(cancel, 1, 6, 2, 1, HPos.RIGHT, VPos.CENTER);
-		gridpane.setHgap(3);
-		gridpane.setVgap(5);
-		
-		return gridpane;
+		addBreakageToTable.setStyle("-fx-pref-height:29;-fx-pref-width:180.0;-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
+		cancel.setStyle("-fx-pref-height:29;-fx-pref-width:201.0;-fx-background-color: #3F51B5;;-fx-text-fill:white;-fx-font-size: 13px;-fx-font-family:arial;");
+		Object[][] nodeDtls = new Object[][] {
+			{choosePrdctLabel,0,0,0,0},
+			{prdctcomboBox,0,2,0,0},
+			{qtyLabel,1,0,0,0},
+			{qtyFld,1,2,0,0},
+			{basicValLabel,2,0,0,0},
+			{rsSymbol,2,1,0,0},
+			{basicVal,2,2,0,0},
+			{mrpLabel,3,0,0,0},
+			{rsSymbol2,3,1,0,0},
+			{mrpFld,3,2,0,0},
+			{withCell,4,0,0,2},
+			{withoutCell,4,2,0,2},
+			{cellQtyLabel,5,0,0,0},
+			{cellQtyFld,5,2,0,0},
+			{addBreakageToTable,6,0,0,3},
+			{cancel,6,2,0,2}
+		};
+		return DialogueCreator.createGridDialogue(nodeDtls, 550);
 	}
 	
 	private boolean addItemTable(Product prod,String qtyStr,String basicVal,String mrpVal,Object shellStatus,String cellStr){

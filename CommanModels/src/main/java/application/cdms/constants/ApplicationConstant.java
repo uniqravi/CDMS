@@ -10,6 +10,7 @@ public interface ApplicationConstant {
   SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");
   SimpleDateFormat dateformatter=new SimpleDateFormat("dd-MM-yyyy");
   SimpleDateFormat timeformatter=new SimpleDateFormat("hh:mm:ss a");
+  SimpleDateFormat monthYearFormatter=new SimpleDateFormat("MMM-yy");
   String POSITIVE="Y";
   String NEGATIVE="N";
   String SUPPLY_STATUS_NEW="NEW";

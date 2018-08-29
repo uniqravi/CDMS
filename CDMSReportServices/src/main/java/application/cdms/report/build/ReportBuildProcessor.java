@@ -13,7 +13,7 @@ public class ReportBuildProcessor {
 	
 	private static final String queryType="queryType";
 	
-	public void startBuildProcess(String reportNm,Node node){
+	public void startBuildProcess(String reportNm,Node node,Map<String,String> elValuesMap){
 		try{
 			//reading xml meta files
 			ReportMetaReader metaReader = new ReportXMLMetaReader();
@@ -24,7 +24,7 @@ public class ReportBuildProcessor {
 			Map<String,String[]> dataMap=dataCollector.collectReportData();
 			
 			//prepare data n meta  Strategy
-			Prepare_DataMeta_Strategy dataNMetaPrepare = new Prepare_DataMeta_Strategy(reportMetaInfo, dataMap);
+			Prepare_DataMeta_Strategy dataNMetaPrepare = new Prepare_DataMeta_Strategy(reportMetaInfo, dataMap,elValuesMap);
 			ReportMetaDataHolder dataMetaHolder=dataNMetaPrepare.getDataMetaHolder();
 			
 			//generate Excel report

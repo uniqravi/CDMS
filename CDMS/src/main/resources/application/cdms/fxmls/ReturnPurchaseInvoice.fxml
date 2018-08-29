@@ -116,7 +116,7 @@
                                           </JFXButton>
                                           <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="185.0" styleClass="value_label" text="Total Load: " />
                                           <JFXTextField fx:id="totalLoadTextFld" editable="false" prefHeight="30.0" prefWidth="77.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
-                                          <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="118.0" styleClass="value_label" text="Net Amount: " />
+                                          <Label alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="118.0" styleClass="value_label" text="Net Amount: &#x20b9;" />
                                           <JFXTextField fx:id="netAmtTextFld" editable="false" prefHeight="30.0" prefWidth="131.0" style="-fx-font-size: 16px;" styleClass="custom_textField" />
                                        </children>
                                        <VBox.margin>

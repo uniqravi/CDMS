@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface DaoQuery {
    String queryString();
+   int limit() default 0;
 }

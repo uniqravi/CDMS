@@ -25,14 +25,17 @@ public class Prepare_DataMeta_Strategy {
 	
 	private ReportMetaDataHolder metaDataHolder;
 	
-	public Prepare_DataMeta_Strategy(XlsReportMetaInfo metaInfo,Map<String,String[]> dataMap){
+	private ReportElEvaluator elEvaluator;
+	
+	public Prepare_DataMeta_Strategy(XlsReportMetaInfo metaInfo,Map<String,String[]> dataMap,Map<String,String> elValuesMap){
 		this.metaInfo=metaInfo;
 		this.dataMap=dataMap;
+		this.elEvaluator=new ReportElEvaluator(elValuesMap);
 		prepareStrategyData();
 	}
 
 	private void prepareStrategyData() {
-		metaDataHolder = new ReportMetaDataHolder(metaInfo.getXlsWorkSheetNm(), metaInfo.getExportFileNm(), metaInfo.getInputSourcetype());
+		metaDataHolder = new ReportMetaDataHolder(elEvaluator.getReportElValue(metaInfo.getXlsWorkSheetNm()), metaInfo.getExportFileNm(), metaInfo.getInputSourcetype());
 		ReportHeaderHolder reportHeaderHolder = new ReportHeaderHolder();
 		reportHeaderHolder.setTopHeader(createTopHeader());
 		reportHeaderHolder.setGroupHeader(createGroupHeaderArr());

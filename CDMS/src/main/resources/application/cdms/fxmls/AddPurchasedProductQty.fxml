@@ -374,7 +374,7 @@
                                                       </HBox>
                                                       <HBox alignment="BOTTOM_RIGHT" prefHeight="50.0">
                                                          <children>
-                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Paid Amount" />
+                                                            <Label prefHeight="37.0" prefWidth="211.0" style="-fx-text-fill: #aaa; -fx-font-size: 15px;" text="Paid Amount &#x20b9;" />
                                                             <JFXTextField fx:id="paymentAmountTextFld" prefHeight="37.0" prefWidth="393.0" promptText="Paid Amount" styleClass="custom_textField" />
                                                          </children>
                                                       </HBox>

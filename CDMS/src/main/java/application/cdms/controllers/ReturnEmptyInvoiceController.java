@@ -162,7 +162,11 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 	}
 
 	private void afterPageLoadingAction() {
-		challanSummeryLstTable.getItems().addAll(productService.getAllChallanDtlsForForRtnEmpty(Initialization.LAZY));
+		List<PurchaseDtls> purchaseForReturn = productService.getAllChallanDtlsForForRtnEmpty(Initialization.LAZY);
+		if(purchaseForReturn!=null && !purchaseForReturn.isEmpty()) {
+			challanSummeryLstTable.getItems().addAll(purchaseForReturn);
+		}
+		//challanSummeryLstTable.getItems().addAll();
 	}
 	@SuppressWarnings("unchecked")
 	@Override

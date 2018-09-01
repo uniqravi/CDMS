@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -1131,12 +1130,10 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 			try{
 				Criteria criteria=HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
 				Criterion cn1=Restrictions.isNull("rtnEmptyInvoiceNo");
-				Map<String,Object> propNmVals = new HashMap<>();
-				propNmVals.put("returningBottleQty",0L);
-				propNmVals.put("returningCellQty",0L);
-				Criterion cn2 = Restrictions.allEq(propNmVals);
-				LogicalExpression lgExp = Restrictions.and(cn1, cn2);
-				criteria.add(lgExp);
+				Criterion cn2 = Restrictions.ne("returningBottleQty",0L);
+				Criterion cn3 = Restrictions.ne("returningCellQty",0L);
+				Criterion cn4 = Restrictions.and(cn1, cn2,cn3);
+				criteria.add(cn4);
 				criteria.addOrder(Order.desc("challanDt"));
 				criteria.setMaxResults(5);
 				@SuppressWarnings("unchecked")

@@ -318,11 +318,13 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 			}
 			purchasePrdctDtl.setPrdctBreakageDtl(breakageEntity);
 		}
-		Iterator<PurchaseNonBeveragePrdctDtl> itr2 = purchaseDtl.getNonBevPrdctList().iterator();
-		while(itr2.hasNext()){
-			PurchaseNonBeveragePrdctDtl purchaseNonBev = itr2.next();
-			purchaseNonBev.setPrdctRecievedDt(cal);
-			purchaseNonBev.setPurchaseMasterdtl(purchaseDtl);
+		if(purchaseDtl.getNonBevPrdctList()!=null && !purchaseDtl.getNonBevPrdctList().isEmpty()) {
+			Iterator<PurchaseNonBeveragePrdctDtl> itr2 = purchaseDtl.getNonBevPrdctList().iterator();
+			while(itr2.hasNext()){
+				PurchaseNonBeveragePrdctDtl purchaseNonBev = itr2.next();
+				purchaseNonBev.setPrdctRecievedDt(cal);
+				purchaseNonBev.setPurchaseMasterdtl(purchaseDtl);
+			}
 		}
 		HibernateUtils.getCustomeTrasationManager().initTx();
 		logger.info("ProductServiceImpl :: addPurchaseDtls :: db activity start");

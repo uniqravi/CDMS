@@ -217,7 +217,7 @@ public class UpdatePurchasePaymentController implements Initializable, ScreenCon
 		if(payId==null || payId.trim().equals("")){
 			isError=true;
 			strbuld.append("Payment Id cannot be blank. \n");
-			payIdText.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
+			//payIdText.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
 		}
 		if(isError){
 			ErrorDialog.showErrorDilogue(new Text(strbuld.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);

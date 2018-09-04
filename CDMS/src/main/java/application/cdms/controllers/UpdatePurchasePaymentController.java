@@ -156,27 +156,13 @@ public class UpdatePurchasePaymentController implements Initializable, ScreenCon
 			    for(Field fld : flds){
 		    		 fld.setAccessible(true);
 		    		 Object value=fld.get(purchaseDtls);
-		    		 if(value instanceof String){
 		    			 Node node  = billInfoHbox.lookup("#"+fld.getName());
 		    			 if(node instanceof TextField){
-		    				 ((TextField) node).setText(value.toString());
+		    				 ((TextField) node).setText(value!=null ? value.toString():null);
 		    			 }
 		    			 if(node instanceof ComboBox){
-		    				 ((ComboBox) node).setValue(value.toString());
+		    				 ((ComboBox) node).setValue(value!=null ? value.toString():null);
 		    			 }
-		    		 }
-		    		 else if(value instanceof Double){
-		    			 TextField textField = (TextField) billInfoHbox.lookup("#"+fld.getName());
-		    			 if(textField!=null){
-		    				 textField.setText(value.toString());
-		    			 }
-		    		 }
-		    		 else if(value instanceof Long){
-		    			 TextField textField = (TextField) billInfoHbox.lookup("#"+fld.getName());
-		    			 if(textField!=null){
-		    				 textField.setText(value.toString());
-		    			 }
-		    		 }
 			    }
 			}
 			catch(Exception exp){
@@ -199,26 +185,34 @@ public class UpdatePurchasePaymentController implements Initializable, ScreenCon
 		JFXDatePicker payDt = (JFXDatePicker) billInfoHbox.lookup("#paymentDt");
 		JFXComboBox<String> payCombo = (JFXComboBox) billInfoHbox.lookup("#paymentMethod");
 		TextField payIdText=(TextField) billInfoHbox.lookup("#paymentId");
+		TextField challanInvoiceNumTextFld=(TextField) billInfoHbox.lookup("#challanInvoiceNumber");
+		TextField challanNumTextFld=(TextField) billInfoHbox.lookup("#challanNumber");
 		String paidAmtStr = paidAmtTextfld.getText();
 		String payDateStr = payDt.getConverter().toString(payDt.getValue());
 		String payMethod = payCombo.getValue();
 		String payId = payIdText.getText();
+		String invoiceNum=challanInvoiceNumTextFld.getText();
+		String challanNum = challanNumTextFld.getText();
+		if(invoiceNum==null || challanNum==null || invoiceNum.trim().equals("") || invoiceNum.trim().equals("")) {
+			ErrorDialog.showErrorDilogue(new Text("Please choose one from table "), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
+			return ;
+		}
 		StringBuilder strbuld = new StringBuilder();
 		boolean isError = false;
 		if(paidAmtStr==null || paidAmtStr.trim().equals("")){
 			isError=true;
 			strbuld.append("Paid amount field cannot be blank \n");
-			paidAmtTextfld.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
+			//paidAmtTextfld.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
 		}
 		if(payDateStr==null || payDateStr.trim().equals("")){
 			isError=true;
 			strbuld.append("Please provide payment date on which payment has been made. \n");
-			payDt.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
+			//payDt.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
 		}
 		if(payMethod==null || payMethod.trim().equals("")){
 			isError=true;
 			strbuld.append("Please choose payment method. \n");
-			payCombo.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
+			//payCombo.setStyle("-fx-border-color: red;-fx-border-width: 0.0px 0px 4px 0px;-fx-border-style: dashed;");
 		}
 		if(payId==null || payId.trim().equals("")){
 			isError=true;
@@ -229,7 +223,18 @@ public class UpdatePurchasePaymentController implements Initializable, ScreenCon
 			ErrorDialog.showErrorDilogue(new Text(strbuld.toString()), ((StackPane) t.getCurrentNode()),SystemMessages.validation_heading);
 			return ;
 		}
-		String purchaseSeq = challanSummeryLstTable.getItems().get(0).getPurchaseId();
+		String purchaseSeq = null;
+		ObservableList<PurchaseDtls> pList=challanSummeryLstTable.getItems();
+		for(PurchaseDtls purchaseDtls : pList) {
+			if(purchaseDtls.getChallanInvoiceNumber().equals(invoiceNum) && purchaseDtls.getChallanNumber().equals(challanNum)) {
+				purchaseSeq=purchaseDtls.getPurchaseId();
+			}
+		}
+		logger.info("found purchase seq from table ### "+purchaseSeq);
+		if(purchaseSeq==null) {
+			return ;
+		}
+		String purchSq=purchaseSeq;
 		updatePurchasepayDtlTask=new Task<Void>(){
 			@Override
 			protected Void call() throws Exception {
@@ -237,7 +242,7 @@ public class UpdatePurchasePaymentController implements Initializable, ScreenCon
 				updatePayButton.setDisable(true);
 				searchButton.setDisable(true);
 				Double paidAmt = Double.parseDouble(paidAmtStr);
-				productService.updatePurchasePaymentDtl(purchaseSeq,paidAmt,payMethod,payDateStr,payId);
+				productService.updatePurchasePaymentDtl(purchSq,paidAmt,payMethod,payDateStr,payId);
 				return null;
 			}
 		};

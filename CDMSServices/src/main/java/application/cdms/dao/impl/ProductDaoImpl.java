@@ -3,7 +3,10 @@ package application.cdms.dao.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 
 import application.cdms.dao.ProductDao;
 import application.cdms.db.entities.BeverageProductCategory;
@@ -81,7 +84,7 @@ public final class ProductDaoImpl implements ProductDao{
 	@Override
 	public List<BeverageProductCategory> getProductListByParams(BeverageProductCategory productCat) throws Exception{
 		logger.info("ProductDaoImpl :: getProductListByParams :: begin");
-		String prdctListByGroupNm = "select * from cdms.beverage_product_category where ";
+		/*String prdctListByGroupNm = "select * from cdms.beverage_product_category where ";
 		if(productCat.getGroupName()!=null){
 			prdctListByGroupNm+="group_name='"+productCat.getGroupName()+"' ";
 		}
@@ -89,7 +92,18 @@ public final class ProductDaoImpl implements ProductDao{
 		logger.info("ProductDaoImpl :: getProductListByParams :: Executed Query ### "+prdctListByGroupNm);
 		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(prdctListByGroupNm).addEntity(BeverageProductCategory.class);
 		@SuppressWarnings("unchecked")
-		List<BeverageProductCategory> prdctList=query.list();
+		List<BeverageProductCategory> prdctList=query.list(); */
+		Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(BeverageProductCategory.class);
+		if(productCat.getGroupName()!=null){
+			criteria.add(Restrictions.eq("groupName",productCat.getGroupName()));
+		}
+		criteria.setFetchMode("fillingQty", FetchMode.JOIN);
+		criteria.setFetchMode("flavr", FetchMode.JOIN);
+		criteria.setFetchMode("packing", FetchMode.JOIN);
+		criteria.setFetchMode("packingQty", FetchMode.JOIN);
+		criteria.setFetchMode("hsn", FetchMode.JOIN);
+		@SuppressWarnings("unchecked")
+		List<BeverageProductCategory> prdctList=criteria.list();
 		logger.info("ProductDaoImpl :: getProductListByParams :: Product list ### "+prdctList);
 		logger.info("ProductDaoImpl :: getProductListByParams :: End");
 		return prdctList;
@@ -184,6 +198,10 @@ public final class ProductDaoImpl implements ProductDao{
 	@Override
 	public PurchaseDtl getChallanDetailByInvoice(String invoice){
 		logger.info("getChallanDetailByInvoice :: begin");
+		//Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
+		//criteria.add(Restrictions.eq("challanInvoiceNo",invoice));
+		//criteria.setFetchMode("puchasedPrdctList", FetchMode.JOIN);
+		//criteria.setFetchMode("nonBevPrdctList", FetchMode.JOIN);
 		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchaseDtlsQuery).addEntity(PurchaseDtl.class);
 		query.setParameter(0,invoice);
 		PurchaseDtl purchaseDtl = (PurchaseDtl) query.uniqueResult();

@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -285,12 +286,20 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 	public ObservableList<Product> productList() {
 		logger.info("ProductServiceImpl :: productList :: begin");
 		HibernateUtils.getCustomeTrasationManager().initTx();
-		List<BeverageProductCategory> beveProductCateList = this.findAllEntity(BeverageProductCategory.class);
+		Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(BeverageProductCategory.class);
+		criteria.setFetchMode("fillingQty", FetchMode.JOIN);
+		criteria.setFetchMode("flavr", FetchMode.JOIN);
+		criteria.setFetchMode("packing", FetchMode.JOIN);
+		criteria.setFetchMode("packingQty", FetchMode.JOIN);
+		criteria.setFetchMode("hsn", FetchMode.JOIN);
+		//List<BeverageProductCategory> beveProductCateList = this.findAllEntity(BeverageProductCategory.class);
+		@SuppressWarnings("unchecked")
+		List<BeverageProductCategory> beveProductCateList=criteria.list();
 		ObservableList<Product> productList = FXCollections.observableArrayList();
+		HibernateUtils.commitCloseCustomeTransationManager();
 		for (BeverageProductCategory beverage : beveProductCateList) {
 			productList.add(BeanTransformer.getProductBean(beverage,Initialization.EAGER));
 		}
-		HibernateUtils.commitCloseCustomeTransationManager();
 		Collections.sort(productList);
 		logger.info("ProductServiceImpl :: productList :: product List count ### "+productList.size());
 		logger.info("ProductServiceImpl :: productList :: end");

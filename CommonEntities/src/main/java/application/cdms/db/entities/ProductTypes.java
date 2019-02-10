@@ -17,7 +17,7 @@ public class ProductTypes {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar productAddedDt;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="hsn_code",referencedColumnName="hsn_cd")
 	private HsnTaxStructure hsn;
 	

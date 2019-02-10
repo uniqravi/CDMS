@@ -151,7 +151,7 @@ public class PurchaseTaxDetailController implements Initializable, ScreenControl
 	}
 
 	private void afterLoadingPageAction() throws Exception {
-		ObservableList<String[]> billSummeryLt=productService.viewPurchaseSummeryByDt(null);
+		ObservableList<String[]> billSummeryLt=dataProvider.viewPurchaseSummeryWithoutCriteria();
 		purchaseSummeryLstTable.getItems().addAll(billSummeryLt);
 	}
 

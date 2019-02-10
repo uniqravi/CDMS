@@ -78,6 +78,15 @@ public interface CDMSDataProviderService {
 	@DaoQuery(queryString="select nb.non_bev_product_cd,nb.product_name,npb.unit_price from cdms.non_beverage_product_category as nb " + 
 			"left join cdms.purchase_non_beverage_prdct_dtl as npb on nb.non_bev_product_cd=npb.non_bev_product_cd order by prdct_recieved_dt desc",limit=2)
 	ObservableList<String[]> getNonBeveragePrdctsPrice();
+	
+	@DaoQuery(queryString="select to_char(pur.challan_dt,'DD-MON-YYYY') as challan_dt,pur.challan_invoice_no,"
+			+ "pur.challan_no,sum(purprd.purchase_prdct_qty) as total_load,pur.total_purchased_glass_qty,pur.total_return_empty_glass_qty,"
+			+ "sum(purprd.purchase_prdct_cgst) as cgst_sum,sum(purprd.purchase_prdct_igst) as igst_sum,"
+			+ "sum(purprd.purchase_prdct_sgst) as sgst_sum,sum(purprd.purchase_prdct_cess_tax) as cess_sum ,pur.purchase_seq_no "
+			+ "from cdms.purchase_dtl as pur "
+			+ "inner join cdms.purchase_prdct_dtl as purprd on pur.purchase_seq_no=purprd.purchase_seq_no "
+			+ "group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc")
+	ObservableList<String[]> viewPurchaseSummeryWithoutCriteria();
 
 	static class CDMSDataIntanceProvider {
 		private static CDMSDataProviderService instance = (CDMSDataProviderService) Proxy.newProxyInstance(

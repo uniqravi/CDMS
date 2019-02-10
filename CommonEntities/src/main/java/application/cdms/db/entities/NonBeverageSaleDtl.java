@@ -17,8 +17,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import application.cdms.enums.InvoiceType;
-
 @Entity
 @Table(name="non_beverage_sale_dtl",schema="cdms")
 public class NonBeverageSaleDtl {

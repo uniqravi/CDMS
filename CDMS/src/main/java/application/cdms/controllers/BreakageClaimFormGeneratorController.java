@@ -28,6 +28,7 @@ import application.cdms.component.data.handler.ErrorDialog;
 import application.cdms.component.data.handler.PrintJobScreen;
 import application.cdms.component.data.handler.SuccessDialog;
 import application.cdms.constants.ApplicationConstant;
+import application.cdms.models.FirmSeller;
 import application.cdms.models.HsnTax;
 import application.cdms.models.Product;
 import application.cdms.models.ProductGroup;
@@ -114,6 +115,9 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 	@FXML
 	private TextField ttlCellTextFld;
 	
+	@FXML
+    private ComboBox<FirmSeller> cmpnyComboBox;
+	
 	//private LongProperty totalLoad =new SimpleLongProperty(0);
 	
 	private DoubleProperty netAmtProp=new SimpleDoubleProperty(0);
@@ -149,6 +153,16 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		cmpnyComboBox.setItems(productService.getAllSellerFirmDtl());
+		cmpnyComboBox.valueProperty().addListener( (e) ->{
+			FirmSeller firmSeller=cmpnyComboBox.getSelectionModel().getSelectedItem();
+			if(firmSeller!=null){
+				firmNmTextFld.setText(firmSeller.getFirmNm());
+				firmGstnTextFld.setText(firmSeller.getFirmGstnNumber());
+				firmNmTextFld.setDisable(true);
+				firmGstnTextFld.setDisable(true);
+			}
+		});
 		Tooltip.install(deleteImage, new Tooltip("Delete"));
 		sr_col.setCellFactory(CellFactoryGenerator.getSrNumberCellFactory());
 		action_col.setCellFactory(new Callback<TableColumn, TableCell>() {
@@ -193,6 +207,16 @@ public class BreakageClaimFormGeneratorController implements Initializable, Scre
 		ttlGlassTextFld.textProperty().bindBidirectional(deliverBsGlass,new NumberStringConverter());
 		ttlCellTextFld.textProperty().bindBidirectional(deliverCell,new NumberStringConverter());
 	}
+	
+	@FXML
+	public void resetCompanyFldButton(ActionEvent e){
+		cmpnyComboBox.setValue(null);
+		firmGstnTextFld.setDisable(false);
+		firmNmTextFld.setDisable(false);
+		firmNmTextFld.setText("");
+		firmGstnTextFld.setText("");
+	}
+	
 	
 	@FXML
     void addBreakagePrdctIntoTbl(MouseEvent event) {

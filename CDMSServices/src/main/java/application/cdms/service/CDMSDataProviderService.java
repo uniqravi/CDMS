@@ -85,7 +85,7 @@ public interface CDMSDataProviderService {
 			+ "sum(purprd.purchase_prdct_sgst) as sgst_sum,sum(purprd.purchase_prdct_cess_tax) as cess_sum ,pur.purchase_seq_no "
 			+ "from cdms.purchase_dtl as pur "
 			+ "inner join cdms.purchase_prdct_dtl as purprd on pur.purchase_seq_no=purprd.purchase_seq_no "
-			+ "group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc")
+			+ "group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc",limit=30)
 	ObservableList<String[]> viewPurchaseSummeryWithoutCriteria();
 
 	static class CDMSDataIntanceProvider {

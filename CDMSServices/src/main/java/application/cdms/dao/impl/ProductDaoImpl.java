@@ -13,7 +13,6 @@ import application.cdms.db.entities.BeverageProductCategory;
 import application.cdms.db.entities.PrdctCurrPriceScheme;
 import application.cdms.db.entities.PurchaseDtl;
 import application.cdms.hibernate.utility.HibernateUtils;
-import application.cdms.models.SearchBean;
 
 public final class ProductDaoImpl implements ProductDao{
 	
@@ -63,7 +62,6 @@ public final class ProductDaoImpl implements ProductDao{
 		return grpNmLst;
 	}
 	
-	//private final String prdctSchemeDtlsQuery="select a.*,b.* from cdms.beverage_product_category as a left join  cdms.prdct_curr_price_scheme as b on a.product_cd=b.product_cd where a.group_name=?";
 	private final String prdctSchemeDtlsQuery="select a.*,b.* from cdms.beverage_product_category "
 			+ "as a left join  cdms.prdct_curr_price_scheme as b on a.product_cd=b.product_cd "
 			+ "where a.group_name=? and (b.price_lastchange_dt is null or b.price_lastchange_dt in "
@@ -84,15 +82,6 @@ public final class ProductDaoImpl implements ProductDao{
 	@Override
 	public List<BeverageProductCategory> getProductListByParams(BeverageProductCategory productCat) throws Exception{
 		logger.info("ProductDaoImpl :: getProductListByParams :: begin");
-		/*String prdctListByGroupNm = "select * from cdms.beverage_product_category where ";
-		if(productCat.getGroupName()!=null){
-			prdctListByGroupNm+="group_name='"+productCat.getGroupName()+"' ";
-		}
-		prdctListByGroupNm+="order by product_name";
-		logger.info("ProductDaoImpl :: getProductListByParams :: Executed Query ### "+prdctListByGroupNm);
-		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(prdctListByGroupNm).addEntity(BeverageProductCategory.class);
-		@SuppressWarnings("unchecked")
-		List<BeverageProductCategory> prdctList=query.list(); */
 		Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(BeverageProductCategory.class);
 		if(productCat.getGroupName()!=null){
 			criteria.add(Restrictions.eq("groupName",productCat.getGroupName()));
@@ -121,118 +110,20 @@ public final class ProductDaoImpl implements ProductDao{
 		return prdctPriceShemeLst;
 	}
 	
-	private final String purchasesSummeryByDt = "select to_char(challan_dt,'DD-MON-YYYY') as challan_dt,pur.challan_invoice_no,pur.challan_no,sum(purprd.purchase_prdct_qty) as total_load, "
-			+ "pur.total_purchased_glass_qty,pur.total_return_empty_glass_qty, "+
-	"sum(purprd.purchase_prdct_cgst) as cgst_sum, "
-	+ "sum(purprd.purchase_prdct_igst) as igst_sum, "
-	+ "sum(purprd.purchase_prdct_sgst) as sgst_sum, "+
-	"sum(purprd.purchase_prdct_cess_tax) as cess_sum ,pur.purchase_seq_no "+
-	"from cdms.purchase_dtl as pur,cdms.purchase_prdct_dtl as purprd "+
-	"where pur.purchase_seq_no=purprd.purchase_seq_no and challan_dt between to_date(?,'DD-MM-YYYY') and to_date(?,'DD-MM-YYYY') "+
-	"group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc";
-	
-	/*
-	private final String purchasesSummeryQuery = "select to_char(challan_dt,'DD-MON-YYYY') as challan_dt,pur.challan_invoice_no,pur.challan_no,sum(purprd.purchase_prdct_qty) as total_load, "
-			+ "pur.total_purchased_glass_qty,pur.total_return_empty_glass_qty, "+
-	"sum(purprd.purchase_prdct_cgst) as cgst_sum, "
-	+ "sum(purprd.purchase_prdct_igst) as igst_sum, "
-	+ "sum(purprd.purchase_prdct_sgst) as sgst_sum, "+
-	"sum(purprd.purchase_prdct_cess_tax) as cess_sum ,pur.purchase_seq_no "+
-	"from cdms.purchase_dtl as pur,cdms.purchase_prdct_dtl as purprd "+
-	"where pur.purchase_seq_no=purprd.purchase_seq_no "+
-	"group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc";
-	*/
-	
-	private final String purchasesSummeryQuery="select to_char(pur.challan_dt,'DD-MON-YYYY') as challan_dt,pur.challan_invoice_no,"
-			+ "pur.challan_no,sum(purprd.purchase_prdct_qty) as total_load,pur.total_purchased_glass_qty,pur.total_return_empty_glass_qty,"
-			+ "sum(purprd.purchase_prdct_cgst) as cgst_sum,sum(purprd.purchase_prdct_igst) as igst_sum,"
-			+ "sum(purprd.purchase_prdct_sgst) as sgst_sum,sum(purprd.purchase_prdct_cess_tax) as cess_sum ,pur.purchase_seq_no "
-			+ "from cdms.purchase_dtl as pur "
-			+ "inner join cdms.purchase_prdct_dtl as purprd on pur.purchase_seq_no=purprd.purchase_seq_no "
-			+ "group by  pur.challan_no, pur.challan_invoice_no,pur.purchase_seq_no order by pur.challan_dt desc";
-	
-	@Override
-	public List<String[]> viewPurchaseSummeryByDt(SearchBean serchBean) throws Exception{
-		logger.info("viewPurchaseSummeryByDt :: begin");
-		Query query=null;
-		if(serchBean!=null){
-			query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchasesSummeryByDt);
-			query.setParameter(0,serchBean.getFromDt());
-			query.setParameter(1, serchBean.getToDt());
-		}
-		if(serchBean==null){
-			query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchasesSummeryQuery);
-			query.setMaxResults(10);
-		}
-		
-		@SuppressWarnings("unchecked")
-		List<String[]> billSumryDtlLst=query.list();
-		logger.info("viewPurchaseSummeryByDt:: list retrieved ### "+billSumryDtlLst);
-		logger.info("viewPurchaseSummeryByDt :: End");
-		return billSumryDtlLst;
-	}
-	
-	private final String purchaseTaxComponentByInvoice="select hsn.hsn_cd,"
-			+ "(hsn.hsn_discription || ' | ' || hsn.cgst || ' cgst | ' || hsn.sgst_or_igst || ' sgst_igst | ' || hsn.cess || ' cess') as tax_description, "
-			+ "sum(purprd.purchase_prdct_cgst) as cgst_sum,sum(purprd.purchase_prdct_sgst) as sgst_sum, "
-			+ "sum(purprd.purchase_prdct_igst) as igst_sum,sum(purprd.purchase_prdct_cess_tax) as cess_sum "
-			+ "from cdms.purchase_prdct_dtl as purprd, cdms.beverage_product_category as prdct,cdms.hsn_tax_structure hsn "
-			+ " where purchase_seq_no=(select pur.purchase_seq_no from cdms.purchase_dtl as pur where "
-			+ "pur.challan_invoice_no=?) and purprd.product_cd=prdct.product_cd and prdct.hsn_code=hsn.hsn_cd "
-			+ " group by hsn.hsn_cd,hsn.hsn_discription,hsn.cgst,hsn.sgst_or_igst,hsn.cess ";
-	
-	@Override
-	public List<String[]> viewPurchsTaxCmpontByInvoice(String challanInvNo){
-		logger.info("viewPurchsTaxCmpontByInvoice :: begin");
-		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchaseTaxComponentByInvoice);
-		query.setParameter(0,challanInvNo);
-		@SuppressWarnings("unchecked")
-		List<String[]> taxComponents=query.list();
-		logger.info("viewPurchsTaxCmpontByInvoice:: list retrieved ### "+taxComponents);
-		logger.info("viewPurchsTaxCmpontByInvoice :: End");
-		return taxComponents;
-	}
-	
-	private final String purchaseDtlsQuery="select * from cdms.purchase_dtl as pur where pur.challan_invoice_no=?";
+	//private final String purchaseDtlsQuery="select * from cdms.purchase_dtl as pur where pur.challan_invoice_no=?";
 	
 	@Override
 	public PurchaseDtl getChallanDetailByInvoice(String invoice){
 		logger.info("getChallanDetailByInvoice :: begin");
-		//Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
-		//criteria.add(Restrictions.eq("challanInvoiceNo",invoice));
-		//criteria.setFetchMode("puchasedPrdctList", FetchMode.JOIN);
+		Criteria criteria = HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
+		criteria.add(Restrictions.eq("challanInvoiceNo",invoice));
+		criteria.setFetchMode("puchasedPrdctList", FetchMode.JOIN);
 		//criteria.setFetchMode("nonBevPrdctList", FetchMode.JOIN);
-		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchaseDtlsQuery).addEntity(PurchaseDtl.class);
-		query.setParameter(0,invoice);
-		PurchaseDtl purchaseDtl = (PurchaseDtl) query.uniqueResult();
+		PurchaseDtl purchaseDtl = (PurchaseDtl) criteria.uniqueResult();
 		logger.info("getChallanDetailByInvoice :: recived purchaseDtl ### "+purchaseDtl);
 		return purchaseDtl;
 	}
 	
-	private final String purchaseBreakByInvoiceQuery = "select prdct.group_name, "
-			+ "sum(break.burst_bs) as burst, "
-			+ "sum(break.open_mouth_bs) as open_mount, sum(break.shortage_bs) as shortage, "
-			+ "sum(break.seal_pack_shortage_bs) as seal_shortage, "
-			+ "sum(break.leakage_bs) as leakage "
-			+ "from cdms.prdct_breakage_dtl break INNER join cdms.beverage_product_category as prdct on break.product_cd=prdct.product_cd "
-			+ "where break.breakage_seq in "
-			+ "(select purprd.purchase_breakage_seq from cdms.purchase_prdct_dtl as purprd where "
-			+ "purchase_seq_no=(select pur.purchase_seq_no from cdms.purchase_dtl as pur where "
-			+ "pur.challan_invoice_no=?) "
-			+ ") group by prdct.group_name ";
-	
-	@Override
-	public List<String[]> GETPurchaseBreakLstByInvoice(String challanInvoice){
-		logger.info("GETPurchaseBreakLstByInvoice :: begin");
-		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchaseBreakByInvoiceQuery);
-		query.setParameter(0,challanInvoice);
-		@SuppressWarnings("unchecked")
-		List<String[]> breakLst=query.list();
-		logger.info("GETPurchaseBreakLstByInvoice :: list retrieved ### "+breakLst);
-		logger.info("GETPurchaseBreakLstByInvoice :: End");
-		return breakLst;
-	}
-
 	private final String updatePurchaseRtnInvoiceQuery="update cdms.purchase_dtl set return_invoice_no=? where challan_invoice_no=? and challan_no=?";
 	@Override
 	public void updateRtnPurchaseInvoiceNumber(String challanNumber, String purchaseInvoiceNo, String saleInvoiceNo) throws Exception{
@@ -246,28 +137,6 @@ public final class ProductDaoImpl implements ProductDao{
 		//HibernateUtils.CloseCustomeTransationManager();
 	}
 	
-	private final String purchaseTaxReportBydt="select hsn.hsn_cd,"
-			+ "(hsn.hsn_discription || ' | ' || hsn.cgst || ' cgst | ' || hsn.sgst_or_igst || ' sgst_igst | ' || hsn.cess || ' cess') as tax_description,"
-			+ "sum(purprd.purchase_prdct_cgst) as cgst_sum,sum(purprd.purchase_prdct_sgst) as sgst_sum,"
-			+ "sum(purprd.purchase_prdct_igst) as igst_sum,sum(purprd.purchase_prdct_cess_tax) as cess_sum "
-			+ "from cdms.purchase_prdct_dtl as purprd, cdms.beverage_product_category as prdct,cdms.hsn_tax_structure hsn "
-			+ "where purchase_seq_no in (select pur.purchase_seq_no from cdms.purchase_dtl as pur where "
-			+ "pur.challan_dt between to_date(?,'DD-MM-YYYY') and to_date(?,'DD-MM-YYYY')) "
-			+ "and purprd.product_cd=prdct.product_cd and prdct.hsn_code=hsn.hsn_cd "
-			+ "group by hsn.hsn_cd,hsn.hsn_discription,hsn.cgst,hsn.sgst_or_igst,hsn.cess";
-	@Override
-	public List<String[]> purchaseTaxReportBydtMethod(SearchBean serchBean)throws Exception{
-		logger.info("purchaseTaxReportBydtMethod :: begin");
-		Query query = HibernateUtils.getCustomeTrasationManager().initTx().createSQLQuery(purchaseTaxReportBydt);
-		query.setParameter(0,serchBean.getFromDt());
-		query.setParameter(1, serchBean.getToDt());
-		@SuppressWarnings("unchecked")
-		List<String[]> taxComponents=query.list();
-		logger.info("purchaseTaxReportBydtMethod:: list retrieved ### "+taxComponents);
-		logger.info("purchaseTaxReportBydtMethod :: End");
-		return taxComponents;
-	}
-
 	private final String updateEmptyRtnInvoiceQuery="update cdms.purchase_dtl set return_empty_invoice_no=? where challan_invoice_no=? and challan_no=?";
 	@Override
 	public void updateRtnEmtpyInvoiceNumber(String challanNumber, String purchaseInvoiceNo, String nbSaleInvoiceNum)
@@ -280,5 +149,5 @@ public final class ProductDaoImpl implements ProductDao{
 		int count=query.executeUpdate();
 		logger.info("ProductDaoImpl :: updateRtnEmtpyInvoiceNumber :: updated Row count ### "+count);
 	}
-	
+
 }

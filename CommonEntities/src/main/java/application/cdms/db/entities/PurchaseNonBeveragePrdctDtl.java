@@ -44,7 +44,7 @@ public class PurchaseNonBeveragePrdctDtl implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar prdctRecievedDt;
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="non_bev_product_cd")
 	private NonBeverageProductCatergory novBevProduct;
 	

@@ -62,7 +62,6 @@ import application.cdms.models.SalePrdct;
 import application.cdms.models.SalePrdctInvoice;
 import application.cdms.models.Scheme;
 import application.cdms.models.SchemeProduct;
-import application.cdms.models.SearchBean;
 import application.cdms.models.SupplyDtl;
 import application.cdms.service.ProductService;
 import application.cdms.transformer.BeanTransformer;
@@ -766,71 +765,6 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 		}
 		return saleBean;
 	}
-	@Override
-	public ObservableList<String[]> viewPurchaseSummeryByDt(SearchBean serchBean) throws Exception{
-		logger.info("viewPurchaseSummeryByDt :: Begin");
-		ObservableList<String[]> summryArray=null;
-		try{
-			List<String[]> billSummeryDtls = productDao.viewPurchaseSummeryByDt(serchBean);
-			summryArray=FXCollections.observableArrayList();
-			for(Object[] objArr : billSummeryDtls){
-				//String[] strarray = (String[]) objArr;
-				String[] strArray = new String[]{objArr[0].toString(),
-						objArr[1].toString(),
-						objArr[2].toString(),
-						objArr[3].toString(),
-						objArr[4].toString(),
-						objArr[5].toString(),
-						objArr[6].toString(),
-						objArr[7].toString(),
-						objArr[8].toString(),
-						objArr[9].toString(),
-						objArr[10].toString(),
-				};
-				summryArray.add(strArray);
-			}
-			HibernateUtils.getCustomeTrasationManager().commitTx();
-		}
-		catch(Exception e){
-			logger.fatal("viewPurchaseSummeryByDt :: exception ### "+e.getMessage());
-			throw e;
-		}
-		finally{
-			HibernateUtils.CloseCustomeTransationManager();
-		}
-		logger.info("viewPurchaseSummeryByDt :: End");
-		return summryArray;
- 	}
-	@Override
-	public ObservableList<String[]> viewPurchaseTaxCompntByInvoice(String invoive) throws Exception{
-		logger.info("viewPurchaseTaxCompntByInvoice :: Begin");
-		ObservableList<String[]> texCompntOfInvoice=null;
-		try{
-			List<String[]> texCompntOfInvoiceDb = productDao.viewPurchsTaxCmpontByInvoice(invoive);
-			texCompntOfInvoice=FXCollections.observableArrayList();
-			for(Object[] objArr : texCompntOfInvoiceDb){
-				//String[] strarray = (String[]) objArr;
-				String[] strArray = new String[]{objArr[0].toString(),
-						objArr[1].toString(),
-						objArr[2].toString(),
-						objArr[3].toString(),
-						objArr[4].toString(),
-						objArr[5].toString(),
-				};
-				texCompntOfInvoice.add(strArray);
-			}
-			HibernateUtils.getCustomeTrasationManager().commitTx();
-		}
-		catch(Exception e){
-			logger.fatal("viewPurchaseTaxCompntByInvoice :: exception ### "+e.getMessage());
-			throw e;
-		}
-		finally{
-			HibernateUtils.CloseCustomeTransationManager();
-		}
-		logger.info("viewPurchaseTaxCompntByInvoice :: End");
-		return texCompntOfInvoice;
- 	}
 	
 	@Override
 	public PurchaseDtls getChallanDetailByInvoice(String str,Initialization mode)throws Exception{
@@ -863,6 +797,9 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 			try{
 				Criteria criteria=HibernateUtils.getCustomeTrasationManager().getSession().createCriteria(PurchaseDtl.class);
 				criteria.addOrder(Order.desc("challanDt"));
+				criteria.setFetchMode("puchasedPrdctList", FetchMode.JOIN);
+				//criteria.setFetchMode("nonBevPrdctList", FetchMode.JOIN);
+				//criteria.setFetchMode("puchasedPrdctList.product", FetchMode.JOIN);
 				criteria.setMaxResults(5);
 				@SuppressWarnings("unchecked")
 				List<PurchaseDtl> purchaseEntityList=criteria.list();
@@ -918,35 +855,6 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 			HibernateUtils.CloseCustomeTransationManager();
 		}
 	}
-	@Override
-	public ObservableList<String[]> viewPurchaseBreakByInvoice(String invoive) throws Exception{
-		logger.info("viewPurchaseBreakByInvoice :: Begin");
-		ObservableList<String[]> purchaseBreakLst=null;
-		try{
-			List<String[]> breaksDb = productDao.GETPurchaseBreakLstByInvoice(invoive);
-			purchaseBreakLst=FXCollections.observableArrayList();
-			for(Object[] objArr : breaksDb){
-				String[] strArray = new String[]{objArr[0].toString(),
-						objArr[1].toString(),
-						objArr[2].toString(),
-						objArr[3].toString(),
-						objArr[4].toString(),
-						objArr[5].toString(),
-				};
-				purchaseBreakLst.add(strArray);
-			}
-			HibernateUtils.getCustomeTrasationManager().commitTx();
-		}
-		catch(Exception e){
-			logger.fatal("viewPurchaseBreakByInvoice :: exception ### "+e.getMessage());
-			throw e;
-		}
-		finally{
-			HibernateUtils.CloseCustomeTransationManager();
-		}
-		logger.info("viewPurchaseBreakByInvoice :: End");
-		return purchaseBreakLst;
- 	}
 	
 	@Override
 	public void intiateSupply(SupplyDtl supplyDtl) throws Exception{
@@ -1054,37 +962,6 @@ public final class ProductServiceImpl extends GenericServiceImpl implements Prod
 		HibernateUtils.commitCloseCustomeTransationManager();
 		return sellerLst;
 	}
-
-	@Override
-	public ObservableList<String[]> viewPurchaseTaxByDt(SearchBean serchBean) throws Exception {
-		logger.info("viewPurchaseTaxByDt :: Begin");
-		ObservableList<String[]> texCompntOfInvoice=null;
-		try{
-			List<String[]> purchasetexCompntsbyDt = productDao.purchaseTaxReportBydtMethod(serchBean);
-			texCompntOfInvoice=FXCollections.observableArrayList();
-			for(Object[] objArr : purchasetexCompntsbyDt){
-				String[] strArray = new String[]{
-						objArr[0].toString(),
-						objArr[1].toString(),
-						objArr[2].toString(),
-						objArr[3].toString(),
-						objArr[4].toString(),
-						objArr[5].toString(),
-				};
-				texCompntOfInvoice.add(strArray);
-			}
-			HibernateUtils.getCustomeTrasationManager().commitTx();
-		}
-		catch(Exception e){
-			logger.fatal("viewPurchaseTaxByDt :: exception ### "+e.getMessage());
-			throw e;
-		}
-		finally{
-			HibernateUtils.CloseCustomeTransationManager();
-		}
-		logger.info("viewPurchaseTaxByDt :: End");
-		return texCompntOfInvoice;
- 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ObservableList<NonBeveragePrdct> nonBproductList() {

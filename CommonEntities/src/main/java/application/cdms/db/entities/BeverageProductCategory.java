@@ -37,22 +37,22 @@ public class BeverageProductCategory extends ProductTypes implements Serializabl
 	@Column(name="product_cd")
 	private String productCd;
 
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="filling_qty_cd")
 	private FillingQtyCategory fillingQty;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="flavr_cd")
 	private FlavourCategory flavr;
 
 	@Column(name="group_name")
 	private String groupName;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="packing_name_cd")
 	private PackingNameCategory packing;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="packing_qty_cd")
 	private PackingQtyCategory packingQty;
 

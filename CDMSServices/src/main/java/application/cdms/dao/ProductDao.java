@@ -5,7 +5,6 @@ import java.util.List;
 import application.cdms.db.entities.BeverageProductCategory;
 import application.cdms.db.entities.PrdctCurrPriceScheme;
 import application.cdms.db.entities.PurchaseDtl;
-import application.cdms.models.SearchBean;
 
 
 
@@ -21,17 +20,17 @@ public interface ProductDao {
 
 	List<PrdctCurrPriceScheme> latestAllSchemePrice() throws Exception;
 
-	List<String[]> viewPurchaseSummeryByDt(SearchBean searchBean) throws Exception;
+	//List<String[]> viewPurchaseSummeryByDt(SearchBean searchBean) throws Exception;
 
-	List<String[]> viewPurchsTaxCmpontByInvoice(String challanInvNo);
+	//List<String[]> viewPurchsTaxCmpontByInvoice(String challanInvNo);
 
 	PurchaseDtl getChallanDetailByInvoice(String invoice);
 
-	List<String[]> GETPurchaseBreakLstByInvoice(String challanInvoice);
+	//List<String[]> GETPurchaseBreakLstByInvoice(String challanInvoice);
 
 	void updateRtnPurchaseInvoiceNumber(String challanNumber, String purchaseInvoiceNo, String saleInvoiceNo) throws Exception;
 
-	List<String[]> purchaseTaxReportBydtMethod(SearchBean serchBean) throws Exception;
+	//List<String[]> purchaseTaxReportBydtMethod(SearchBean serchBean) throws Exception;
 
 	void updateRtnEmtpyInvoiceNumber(String challanNumber, String purchaseInvoiceNo, String nbSaleInvoiceNum) throws Exception;
 

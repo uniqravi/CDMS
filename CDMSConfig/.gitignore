@@ -1,1 +1,13 @@
 /target/
+.metadata
+.settings/
+.loadpath
+.recommenders
+*.launch
+.buildpath
+.target
+.recommenders/
+.apt_generated/
+.project
+.classpath
+.apt_generated

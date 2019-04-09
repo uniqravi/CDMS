@@ -582,7 +582,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		bottleUnitPriceFld.setStyle("-fx-pref-height:34.0;-fx-font-size: 14px;");
 		
 		//row	: 2
-		Label shellUnitPriceLabel = new Label("Bottle Unit Price"); 
+		Label shellUnitPriceLabel = new Label("Shell Unit Price"); 
 		shellUnitPriceLabel.setStyle("-fx-text-fill: #aaa; -fx-font-size: 15px;-fx-pref-height:34.0;-fx-pref-width:160.0;-fx-alignment: CENTER_RIGHT;");
 		
 		Label shellRsSymbol = new Label("₹"); 
@@ -628,7 +628,7 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 					createNonBSale(nb,purchaseDtls, bottleUnitPriceStr);
 				}
 				else if(ApplicationConstant.SHELL.equals(nb.getProductNm())) {
-					createNonBSale(nb,purchaseDtls, bottleUnitPriceStr);
+					createNonBSale(nb,purchaseDtls, shellUnitPriceStr);
 				}
 			}
 			returnEmptyTable.refresh();
@@ -676,13 +676,13 @@ public class ReturnEmptyInvoiceController implements ScreenController,Initializa
 		
 		String deliveryTo=(String) state.getSelectedToggle().getUserData();
 		if(ApplicationConstant.DELIVERY_TO_SAME_STATE.equalsIgnoreCase(deliveryTo)){
-			sgstAmt = taxableAmt*salePrdctInvoice.getSgstRate()/100;
-			cgstAmt = taxableAmt*salePrdctInvoice.getCgstRate()/100;
+			sgstAmt = taxableAmt*salePrdctInvoice.getSgstRate();
+			cgstAmt = taxableAmt*salePrdctInvoice.getCgstRate();
 		}
 		else{
-			igstAmt=taxableAmt*salePrdctInvoice.getIgstRate()/100;
+			igstAmt=taxableAmt*salePrdctInvoice.getIgstRate();
 		}
-		double cessAmt = taxableAmt*salePrdctInvoice.getCessRate()/100;
+		double cessAmt = taxableAmt*salePrdctInvoice.getCessRate();
 		double netAmount = taxableAmt+cgstAmt+sgstAmt+igstAmt+cessAmt;
 		
 		salePrdctInvoice.setNetBaseAmt(Utility.decimalRound(netBaseAmt));
